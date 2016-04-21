@@ -25,18 +25,9 @@ RUN cd ~ && \
     cmake . && \
     test -e program_paths.sh
 
-# to be able to run the container from this point
-RUN cd ~ && \
-    cd clang_plugin_tests && \
-    ctest . || true && \
-    cd ~ && \
-    cd pluto_install && \
-    false
+COPY run.sh /run.sh
 
-
-
-
-
+ENTRYPOINT /run.sh
 
 
 
