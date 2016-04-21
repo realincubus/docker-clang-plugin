@@ -1,0 +1,301 @@
+Index: include/clang/Frontend/CompilerInstance.h
+===================================================================
+--- include/clang/Frontend/CompilerInstance.h
++++ include/clang/Frontend/CompilerInstance.h
+@@ -780,6 +780,9 @@
+   void addDependencyCollector(std::shared_ptr<DependencyCollector> Listener) {
+     DependencyCollectors.push_back(std::move(Listener));
+   }
++
++  /// load plugins that were added by -load
++  void loadPlugins();
+ };
+ 
+ } // end namespace clang
+Index: lib/Frontend/ASTUnit.cpp
+===================================================================
+--- lib/Frontend/ASTUnit.cpp
++++ lib/Frontend/ASTUnit.cpp
+@@ -1135,6 +1135,8 @@
+   llvm::CrashRecoveryContextCleanupRegistrar<TopLevelDeclTrackerAction>
+     ActCleanup(Act.get());
+ 
++  Clang->loadPlugins();
++
+   if (!Act->BeginSourceFile(*Clang.get(), Clang->getFrontendOpts().Inputs[0]))
+     goto error;
+ 
+Index: lib/Frontend/CompilerInstance.cpp
+===================================================================
+--- lib/Frontend/CompilerInstance.cpp
++++ lib/Frontend/CompilerInstance.cpp
+@@ -45,6 +45,7 @@
+ #include "llvm/Support/Signals.h"
+ #include "llvm/Support/Timer.h"
+ #include "llvm/Support/raw_ostream.h"
++#include "llvm/Support/DynamicLibrary.h"
+ #include <sys/stat.h>
+ #include <system_error>
+ #include <time.h>
+@@ -1753,3 +1754,15 @@
+   return false;
+ }
+ void CompilerInstance::resetAndLeakSema() { BuryPointer(takeSema()); }
++
++void
++CompilerInstance::loadPlugins(){
++  // Load any requested plugins.
++  for (unsigned i = 0, e = getFrontendOpts().Plugins.size(); i != e; ++i) {
++    const std::string &Path = getFrontendOpts().Plugins[i];
++    std::string Error;
++    if (llvm::sys::DynamicLibrary::LoadLibraryPermanently(Path.c_str(), &Error))
++      getDiagnostics().Report(diag::err_fe_unable_to_load_plugin)
++        << Path << Error;
++  }
++}
+Index: lib/FrontendTool/ExecuteCompilerInvocation.cpp
+===================================================================
+--- lib/FrontendTool/ExecuteCompilerInvocation.cpp
++++ lib/FrontendTool/ExecuteCompilerInvocation.cpp
+@@ -185,14 +185,8 @@
+   }
+ 
+   // Load any requested plugins.
+-  for (unsigned i = 0,
+-         e = Clang->getFrontendOpts().Plugins.size(); i != e; ++i) {
+-    const std::string &Path = Clang->getFrontendOpts().Plugins[i];
+-    std::string Error;
+-    if (llvm::sys::DynamicLibrary::LoadLibraryPermanently(Path.c_str(), &Error))
+-      Clang->getDiagnostics().Report(diag::err_fe_unable_to_load_plugin)
+-        << Path << Error;
+-  }
++  Clang->loadPlugins();
++
+ 
+   // Honor -mllvm.
+   //
+Index: unittests/Frontend/CMakeLists.txt
+===================================================================
+--- unittests/Frontend/CMakeLists.txt
++++ unittests/Frontend/CMakeLists.txt
+@@ -1,3 +1,5 @@
++add_subdirectory(PrintFunctionNamesTestPlugin)
++
+ set(LLVM_LINK_COMPONENTS
+   Support
+   )
+@@ -14,3 +16,4 @@
+   clangSema
+   clangCodeGen
+   )
++add_dependencies(FrontendTests PrintFunctionNamesTestPlugin)
+Index: unittests/Frontend/FrontendActionTest.cpp
+===================================================================
+--- unittests/Frontend/FrontendActionTest.cpp
++++ unittests/Frontend/FrontendActionTest.cpp
+@@ -8,17 +8,21 @@
+ //===----------------------------------------------------------------------===//
+ 
+ #include "clang/Frontend/FrontendAction.h"
++#include "clang/Frontend/FrontendPluginRegistry.h"
+ #include "clang/AST/ASTConsumer.h"
+ #include "clang/AST/ASTContext.h"
+ #include "clang/AST/RecursiveASTVisitor.h"
+ #include "clang/Frontend/CompilerInstance.h"
+ #include "clang/Frontend/CompilerInvocation.h"
+ #include "clang/Lex/Preprocessor.h"
+ #include "clang/Sema/Sema.h"
+ #include "llvm/ADT/Triple.h"
++#include "llvm/Support/DynamicLibrary.h"
+ #include "llvm/Support/MemoryBuffer.h"
+ #include "gtest/gtest.h"
+ 
++#include <iostream>
++
+ using namespace llvm;
+ using namespace clang;
+ 
+@@ -144,6 +148,40 @@
+   EXPECT_EQ("c", test_action.decl_names[12]);
+ }
+ 
++bool pluginIsLoaded(const std::string &pluginName) {
++  for (auto it = FrontendPluginRegistry::begin(),
++       ie = FrontendPluginRegistry::end();
++       it != ie; ++it) {
++    if (it->getName() == pluginName) {
++      return true;
++    }
++  }
++  return false;
++}
++
++TEST(ASTFrontendAction, PluginLoadTest) {
++  CompilerInvocation *invocation = new CompilerInvocation;
++  invocation->getLangOpts()->CPlusPlus = true;
++  invocation->getPreprocessorOpts().addRemappedFile(
++      "test.cc",
++      MemoryBuffer::getMemBuffer("int main() { }").release());
++  invocation->getFrontendOpts().Inputs.push_back(FrontendInputFile("test.cc",
++                                                                   IK_CXX));
++  invocation->getFrontendOpts().ProgramAction = frontend::ParseSyntaxOnly;
++  invocation->getFrontendOpts().Plugins.push_back("PrintFunctionNamesTestPlugin.so");
++  invocation->getTargetOpts().Triple = "i386-unknown-linux-gnu";
++
++  CompilerInstance compiler;
++  compiler.setInvocation(invocation);
++  compiler.createDiagnostics();
++  compiler.loadPlugins();
++
++  TestASTFrontendAction test_action(/*enableIncrementalProcessing=*/true,
++                                    /*actOnEndOfTranslationUnit=*/true);
++  ASSERT_TRUE(compiler.ExecuteAction(test_action));
++  ASSERT_TRUE(pluginIsLoaded("print-fns"));
++}
++
+ struct TestPPCallbacks : public PPCallbacks {
+   TestPPCallbacks() : SeenEnd(false) {}
+ 
+Index: unittests/Frontend/PrintFunctionNamesTestPlugin/CMakeLists.txt
+===================================================================
+--- /dev/null
++++ unittests/Frontend/PrintFunctionNamesTestPlugin/CMakeLists.txt
+@@ -0,0 +1,10 @@
++add_llvm_loadable_module(PrintFunctionNamesTestPlugin PrintFunctionNamesTestPlugin.cpp)
++
++if(LLVM_ENABLE_PLUGINS AND (WIN32 OR CYGWIN))
++  target_link_libraries(PrintFunctionNamesTestPlugin ${cmake_2_8_12_PRIVATE}
++    clangAST
++    clangBasic
++    clangFrontend
++    LLVMSupport
++    )
++endif()
+Index: unittests/Frontend/PrintFunctionNamesTestPlugin/PrintFunctionNamesTestPlugin.cpp
+===================================================================
+--- /dev/null
++++ unittests/Frontend/PrintFunctionNamesTestPlugin/PrintFunctionNamesTestPlugin.cpp
+@@ -0,0 +1,123 @@
++//===- PrintFunctionNames.cpp ---------------------------------------------===//
++//
++//                     The LLVM Compiler Infrastructure
++//
++// This file is distributed under the University of Illinois Open Source
++// License. See LICENSE.TXT for details.
++//
++//===----------------------------------------------------------------------===//
++//
++// Example clang plugin which simply prints the names of all the top-level decls
++// in the input file.
++//
++//===----------------------------------------------------------------------===//
++
++#include "clang/Frontend/FrontendPluginRegistry.h"
++#include "clang/AST/AST.h"
++#include "clang/AST/ASTConsumer.h"
++#include "clang/AST/RecursiveASTVisitor.h"
++#include "clang/Frontend/CompilerInstance.h"
++#include "clang/Sema/Sema.h"
++#include "llvm/Support/raw_ostream.h"
++using namespace clang;
++
++namespace {
++
++class PrintFunctionsConsumer : public ASTConsumer {
++  CompilerInstance &Instance;
++  std::set<std::string> ParsedTemplates;
++
++public:
++  PrintFunctionsConsumer(CompilerInstance &Instance,
++                         std::set<std::string> ParsedTemplates)
++      : Instance(Instance), ParsedTemplates(ParsedTemplates) {}
++
++  bool HandleTopLevelDecl(DeclGroupRef DG) override {
++    for (DeclGroupRef::iterator i = DG.begin(), e = DG.end(); i != e; ++i) {
++      const Decl *D = *i;
++      if (const NamedDecl *ND = dyn_cast<NamedDecl>(D))
++        llvm::errs() << "top-level-decl: \"" << ND->getNameAsString() << "\"\n";
++    }
++
++    return true;
++  }
++
++  void HandleTranslationUnit(ASTContext& context) override {
++    if (!Instance.getLangOpts().DelayedTemplateParsing)
++      return;
++
++    // This demonstrates how to force instantiation of some templates in
++    // -fdelayed-template-parsing mode. (Note: Doing this unconditionally for
++    // all templates is similar to not using -fdelayed-template-parsig in the
++    // first place.)
++    // The advantage of doing this in HandleTranslationUnit() is that all
++    // codegen (when using -add-plugin) is completely finished and this can't
++    // affect the compiler output.
++    struct Visitor : public RecursiveASTVisitor<Visitor> {
++      const std::set<std::string> &ParsedTemplates;
++      Visitor(const std::set<std::string> &ParsedTemplates)
++          : ParsedTemplates(ParsedTemplates) {}
++      bool VisitFunctionDecl(FunctionDecl *FD) {
++        if (FD->isLateTemplateParsed() &&
++            ParsedTemplates.count(FD->getNameAsString()))
++          LateParsedDecls.insert(FD);
++        return true;
++      }
++
++      std::set<FunctionDecl*> LateParsedDecls;
++    } v(ParsedTemplates);
++    v.TraverseDecl(context.getTranslationUnitDecl());
++    clang::Sema &sema = Instance.getSema();
++    for (const FunctionDecl *FD : v.LateParsedDecls) {
++      clang::LateParsedTemplate* LPT = sema.LateParsedTemplateMap.lookup(FD);
++      sema.LateTemplateParser(sema.OpaqueParser, *LPT);
++      llvm::errs() << "late-parsed-decl: \"" << FD->getNameAsString() << "\"\n";
++    }
++  }
++};
++
++class PrintFunctionNamesAction : public PluginASTAction {
++  std::set<std::string> ParsedTemplates;
++protected:
++  std::unique_ptr<ASTConsumer> CreateASTConsumer(CompilerInstance &CI,
++                                                 llvm::StringRef) override {
++    return llvm::make_unique<PrintFunctionsConsumer>(CI, ParsedTemplates);
++  }
++
++  bool ParseArgs(const CompilerInstance &CI,
++                 const std::vector<std::string> &args) override {
++    for (unsigned i = 0, e = args.size(); i != e; ++i) {
++      llvm::errs() << "PrintFunctionNames arg = " << args[i] << "\n";
++
++      // Example error handling.
++      DiagnosticsEngine &D = CI.getDiagnostics();
++      if (args[i] == "-an-error") {
++        unsigned DiagID = D.getCustomDiagID(DiagnosticsEngine::Error,
++                                            "invalid argument '%0'");
++        D.Report(DiagID) << args[i];
++        return false;
++      } else if (args[i] == "-parse-template") {
++        if (i + 1 >= e) {
++          D.Report(D.getCustomDiagID(DiagnosticsEngine::Error,
++                                     "missing -parse-template argument"));
++          return false;
++        }
++        ++i;
++        ParsedTemplates.insert(args[i]);
++      }
++    }
++    if (!args.empty() && args[0] == "help")
++      PrintHelp(llvm::errs());
++
++    return true;
++  }
++  void PrintHelp(llvm::raw_ostream& ros) {
++    ros << "Help for PrintFunctionNames plugin goes here\n";
++  }
++
++};
++
++}
++
++static FrontendPluginRegistry::Add<PrintFunctionNamesAction>
++X("print-fns", "print function names");

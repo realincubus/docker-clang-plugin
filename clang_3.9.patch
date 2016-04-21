@@ -1,0 +1,22 @@
+diff --git a/interface/extract_interface.cc b/interface/extract_interface.cc
+index 3663ef7..e31f8c7 100644
+--- a/interface/extract_interface.cc
++++ b/interface/extract_interface.cc
+@@ -199,7 +199,7 @@ static CompilerInvocation *construct_invocation(const char *filename,
+ 		driver->BuildCompilation(llvm::ArrayRef<const char *>(Argv)));
+ 	JobList &Jobs = compilation->getJobs();
+ 
+-	Command *cmd = cast<Command>(ClangAPI::command(*Jobs.begin()));
++	auto cmd = Jobs.begin();
+ 	if (strcmp(cmd->getCreator().getName(), "clang"))
+ 		return NULL;
+ 
+@@ -372,7 +372,7 @@ int main(int argc, char *argv[])
+ 	create_preprocessor(Clang);
+ 	Preprocessor &PP = Clang->getPreprocessor();
+ 
+-	PP.getBuiltinInfo().InitializeBuiltins(PP.getIdentifierTable(), LO);
++	//PP.getBuiltinInfo().InitializeBuiltins(PP.getIdentifierTable(), LO);
+ 
+ 	const FileEntry *file = Clang->getFileManager().getFile(InputFilename);
+ 	assert(file);
