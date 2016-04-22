@@ -38,7 +38,6 @@ export PATH=$HOME/build/:$PATH && \
 git pull 
 cmake .
 ctest --no-compress-output -T Test . 
-ls
 
 # run pluto tests
 #cd ~ 
@@ -49,6 +48,10 @@ ls
 
 #echo remove old test results 
 #rm -r /host/*
+
+echo "host folder content"
+ls /host
+echo "done host folder content"
 
 echo "copy plugin results to the host"
 cd ~ 
