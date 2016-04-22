@@ -25,9 +25,10 @@ RUN cd ~ && \
     cmake . && \
     test -e program_paths.sh
 
+COPY keep_running.sh /keep_running.sh
 COPY run.sh /run.sh
 
-ENTRYPOINT /run.sh
+ENTRYPOINT /keep_running.sh
 
 
 
