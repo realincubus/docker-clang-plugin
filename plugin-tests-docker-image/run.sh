@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#TODO do not update if there was no change
+
 # update pet
 cd ~
 cd pet
@@ -27,7 +29,7 @@ export pluto_DIR=$HOME/pluto_install
 export PATH=$PATH:$HOME/pet_install:$HOME/pluto_install
 ninja lib/ClanPlugin.so
 
-# run the tests
+# run plugin tests
 cd ~ 
 cd clang_plugin_tests 
 export PATH=$HOME/pet_install/:$PATH && \
@@ -35,7 +37,23 @@ export PATH=$HOME/pluto_install/:$PATH && \
 export PATH=$HOME/build/:$PATH && \
 git pull 
 cmake .
-ctest . 
+ctest --no-compress-output -T Test . 
+ls
+
+# run pluto tests
+#cd ~ 
+#cd pluto 
+#make test 
+
+# TODO run pet tests
+
+#echo remove old test results 
+#rm -r /host/*
+
+echo "copy plugin results to the host"
 cd ~ 
-cd pluto 
-make test 
+cp -r clang_plugin_tests/Testing /host/
+
+# TODO copy pluto test results to the host
+
+# TODO copy pet test results to the host
