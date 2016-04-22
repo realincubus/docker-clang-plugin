@@ -23,6 +23,3 @@ RUN cd ~ && \
     test -e lib/pluto/pluto-config.cmake && \
     test -e include/pluto/libpluto.h 
    
-COPY run.sh /run.sh
-
-ENTRYPOINT /run.sh 
