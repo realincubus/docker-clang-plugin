@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 #TODO do not update if there was no change
 
@@ -40,14 +40,21 @@ cmake .
 ctest --no-compress-output -T Test . 
 
 # run pluto tests
-#cd ~ 
-#cd pluto 
-#make test 
+cd ~ 
+cd pluto/test 
+cmake .
+ctest --no-compress-output -T Test . 
 
 # TODO run pet tests
+cd ~
+cd pet
+mkdir pet_cmake_testing
+cd pet_cmake_testing
+cmake ..
+ctest --no-compress-output -T Test . 
 
 #echo remove old test results 
-#rm -r /host/*
+rm -r /host/test_results
 
 echo "host folder content"
 ls /host
@@ -55,8 +62,18 @@ echo "done host folder content"
 
 echo "copy plugin results to the host"
 cd ~ 
-cp -r clang_plugin_tests/Testing /host/
+cp -r clang_plugin_tests/Testing /host/plugin_results
 
 # TODO copy pluto test results to the host
+cp -r pluto/test/Testing /host/pluto_results/
 
 # TODO copy pet test results to the host
+cp -r pet/tests/Testing /host/pet_results/
+
+
+
+
+
+
+
+

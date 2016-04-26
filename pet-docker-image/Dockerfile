@@ -16,19 +16,21 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
     pacman --noconfirm --force -S pacman && \
     pacman-db-upgrade && \
-    pacman --noconfirm -S git bison flex autogen autoconf automake texinfo glibc libunistring && \
+    pacman --noconfirm -S git bison flex autogen autoconf automake texinfo glibc libunistring libyaml && \
     pacman --noconfirm --force -Scc && \
     cd ~ && \
     mkdir pet_install && \
     git clone https://github.com/realincubus/pet.git && \
     cd pet && \
-    git submodule update --init --recursive && \
+     git submodule update --init --recursive && \
     cd isl && \
     patch -p1 < /root/clang_3.9.patch && \
     cd .. && \
     ./autogen.sh && \
     ./configure --with-clang-prefix=$HOME/install --prefix=$HOME/pet_install --with-pic  && \
     make && \
+    make pet &&\
+    make pet_scop_cmp && \
     make install && \
     cd $HOME/pet_install/ && \
     test -e include/isl/aff.h && \
