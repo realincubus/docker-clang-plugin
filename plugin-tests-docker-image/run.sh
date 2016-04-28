@@ -68,7 +68,7 @@ cp -r clang_plugin_tests/Testing /host/plugin_results
 cp -r pluto/test/Testing /host/pluto_results/
 
 # TODO copy pet test results to the host
-cp -r pet/tests/Testing /host/pet_results/
+cp -r pet/pet_cmake_testing/Testing /host/pet_results/
 
 
 
