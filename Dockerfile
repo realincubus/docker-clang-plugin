@@ -14,7 +14,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S pacman && \
     pacman-db-upgrade && \
     pacman --noconfirm --force -Syu pacman && \
-    pacman --noconfirm --force -S db gcc vim subversion cmake make python grep sed ninja && \
+    pacman --noconfirm --force -S db gcc vim subversion cmake make python grep sed ninja patch && \
     pacman --noconfirm --force -Scc 
 
 COPY raw_diff /root/raw_diff
