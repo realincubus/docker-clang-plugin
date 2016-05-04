@@ -11,28 +11,23 @@
 FROM realincubus/pluto
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
-# download the plugin and change the cmakelists.txt
+# install needed software # TODO move packages to their containers
 RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
     pacman --noconfirm --force -S pacman && \
     pacman-db-upgrade && \
     pacman --noconfirm -S git bison flex autogen autoconf automake texinfo glibc libunistring && \
-    pacman --noconfirm --force -Scc && \
-    cd ~ && \
-    cd llvm/tools/clang/examples/ && \
+    pacman --noconfirm --force -Scc
+
+
+RUN cd ~ && \
     git clone https://github.com/realincubus/ClanPlugin.git && \
-    cd ClanPlugin && \
-    git submodule update --init --recursive && \
-    cd ~ && \
-    cd llvm/tools/clang/examples/ && \
-    echo "add_subdirectory(ClanPlugin)" >> CMakeLists.txt 
+    cd ClanPlugin
  
-# rebuild the tree and provide info about all paths
-RUN export pluto_codegen_cxx_DIR=$HOME/pet_install && \
-    export pluto_DIR=$HOME/pluto_install && \
-    export PATH=$PATH:$HOME/pet_install:$HOME/pluto_install && \
+# build the plugin out of source using pet, pluto and clang
+RUN export PATH=$PATH:$HOME/pet_install:$HOME/pluto_install:$HOME/install && \
     cd ~ && \
-    cd build/ && \
-    ninja && \
-    ninja lib/ClanPlugin.so
+    cd ClanPlugin && \
+    cmake -G "Ninja" . && \
+    ninja
 

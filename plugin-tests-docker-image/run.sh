@@ -20,21 +20,20 @@ make install
 
 #update plugin
 cd ~ 
-cd llvm/tools/clang/examples/ClanPlugin
+cd ClanPlugin
 git pull
-cd ~ 
-cd build 
-export pluto_codegen_cxx_DIR=$HOME/pet_install
-export pluto_DIR=$HOME/pluto_install
-export PATH=$PATH:$HOME/pet_install:$HOME/pluto_install
-ninja lib/ClanPlugin.so
+export PATH=$PATH:$HOME/pet_install
+export PATH=$PATH:$HOME/pluto_install
+export PATH=$PATH:$HOME/install
+ninja 
 
 # run plugin tests
 cd ~ 
 cd clang_plugin_tests 
 export PATH=$HOME/pet_install/:$PATH && \
 export PATH=$HOME/pluto_install/:$PATH && \
-export PATH=$HOME/build/:$PATH && \
+export PATH=$HOME/install/:$PATH && \
+export PATH=$HOME/ClanPlugin/:$PATH && \
 git pull 
 cmake .
 ctest --no-compress-output -T Test . 
@@ -45,7 +44,7 @@ cd pluto/test
 cmake .
 ctest --no-compress-output -T Test . 
 
-# TODO run pet tests
+# run pet tests
 cd ~
 cd pet
 mkdir pet_cmake_testing
@@ -64,10 +63,10 @@ echo "copy plugin results to the host"
 cd ~ 
 cp -r clang_plugin_tests/Testing /host/plugin_results
 
-# TODO copy pluto test results to the host
+# copy pluto test results to the host
 cp -r pluto/test/Testing /host/pluto_results/
 
-# TODO copy pet test results to the host
+# copy pet test results to the host
 cp -r pet/pet_cmake_testing/Testing /host/pet_results/
 
 
