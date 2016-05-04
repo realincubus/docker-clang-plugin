@@ -15,6 +15,7 @@ COPY clang_3.9.patch /root/clang_3.9.patch
 RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
     pacman --noconfirm --force -S pacman && \
+    pacman --noconfirm --force -Syu && \
     pacman-db-upgrade && \
     pacman --noconfirm -S git bison flex autogen autoconf automake texinfo glibc libunistring libyaml && \
     pacman --noconfirm --force -Scc && \

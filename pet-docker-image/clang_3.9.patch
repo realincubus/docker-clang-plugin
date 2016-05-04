@@ -1,5 +1,5 @@
 diff --git a/interface/extract_interface.cc b/interface/extract_interface.cc
-index 3663ef7..e31f8c7 100644
+index 3663ef7..3956fdb 100644
 --- a/interface/extract_interface.cc
 +++ b/interface/extract_interface.cc
 @@ -199,7 +199,7 @@ static CompilerInvocation *construct_invocation(const char *filename,
@@ -11,6 +11,17 @@ index 3663ef7..e31f8c7 100644
  	if (strcmp(cmd->getCreator().getName(), "clang"))
  		return NULL;
  
+@@ -352,8 +352,8 @@ int main(int argc, char *argv[])
+ 	Clang->createSourceManager(Clang->getFileManager());
+ 	TargetInfo *target = create_target_info(Clang, Diags);
+ 	Clang->setTarget(target);
+-	CompilerInvocation::setLangDefaults(Clang->getLangOpts(), IK_C,
+-					    LangStandard::lang_unspecified);
++	//CompilerInvocation::setLangDefaults(Clang->getLangOpts(), IK_C,
++	//				    LangStandard::lang_unspecified);
+ 	HeaderSearchOptions &HSO = Clang->getHeaderSearchOpts();
+ 	LangOptions &LO = Clang->getLangOpts();
+ 	PreprocessorOptions &PO = Clang->getPreprocessorOpts();
 @@ -372,7 +372,7 @@ int main(int argc, char *argv[])
  	create_preprocessor(Clang);
  	Preprocessor &PP = Clang->getPreprocessor();

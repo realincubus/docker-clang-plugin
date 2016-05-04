@@ -1,8 +1,10 @@
 #!/bin/bash -xe
 
-#cd pet-docker-image
 #./build
-#cd ..
+
+cd pet-docker-image
+./build
+cd ..
 
 cd pluto-docker-image
 ./build
@@ -13,5 +15,9 @@ cd plugin-docker-image
 cd ..
 
 cd plugin-tests-docker-image
+./build
+cd ..
+
+cd ycm-docker-image
 ./build
 cd ..
