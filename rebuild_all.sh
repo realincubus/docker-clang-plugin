@@ -2,9 +2,9 @@
 
 #./build
 
-#cd pet-docker-image
-#./build
-#cd ..
+cd pet-docker-image
+./build
+cd ..
 
 cd pluto-docker-image
 ./build

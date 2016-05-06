@@ -1,0 +1,17 @@
+
+
+# to find some executables TODO might not be needed
+export PATH=$HOME/install/bin/:$PATH
+export PATH=$HOME/pet_install/:$PATH
+export PATH=$HOME/pluto_install/:$PATH
+export PATH=$HOME/ClanPlugin/:$PATH
+
+# to find the libraries 
+export LD_LIBRARY_PATH=$HOME/install/lib/:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$HOME/ClanPlugin/lib/:$LD_LIBRARY_PATH
+
+alias vi='vim'
+
+cd ~/example
+
+vim main.cpp
