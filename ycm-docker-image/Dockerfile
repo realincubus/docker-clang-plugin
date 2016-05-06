@@ -41,9 +41,9 @@ RUN mkdir /root/example
 
 COPY CMakeLists.txt /root/example/
 COPY main.cpp /root/example/
-COPY .ycm_extra_conf.py /root/example
+COPY ycm_extra_conf.py /root/example
 
-COPY .bashrc /root/.bashrc
+COPY bashrc /root/.bashrc
 
 # initialize the example project
 
