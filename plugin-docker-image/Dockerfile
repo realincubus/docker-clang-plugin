@@ -16,7 +16,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
     pacman --noconfirm --force -S pacman && \
     pacman-db-upgrade && \
-    pacman --noconfirm -S git bison flex autogen autoconf automake texinfo glibc libunistring && \
+    pacman --noconfirm -S git bison flex autogen autoconf automake texinfo glibc libunistring intel-tbb && \
     pacman --noconfirm --force -Scc
 
 
