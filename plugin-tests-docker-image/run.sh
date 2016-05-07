@@ -53,7 +53,7 @@ cmake ..
 ctest --no-compress-output -T Test . 
 
 #echo remove old test results 
-rm -r /host/test_results
+rm -r /host/*
 
 echo "host folder content"
 ls /host
