@@ -57,6 +57,9 @@ rm -r /host/test_results
 
 echo "host folder content"
 ls /host
+rm -rf /host/pet_results
+rm -rf /host/pluto_results
+rm -rf /host/plugin_results
 echo "done host folder content"
 
 echo "copy plugin results to the host"
@@ -69,7 +72,9 @@ cp -r pluto/test/Testing /host/pluto_results/
 # copy pet test results to the host
 cp -r pet/pet_cmake_testing/Testing /host/pet_results/
 
-
+chmod 777 -R /host/pet_results
+chmod 777 -R /host/pluto_results
+chmod 777 -R /host/plugin_results
 
 
 
