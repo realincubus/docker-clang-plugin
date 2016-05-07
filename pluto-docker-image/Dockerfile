@@ -12,7 +12,7 @@ MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
    
 # install pluto 
 RUN cd ~ && \
-    git clone https://github.com/realincubus/pluto_clang.git pluto && \
+     git clone https://github.com/realincubus/pluto_clang.git pluto && \
     cd pluto && \
     git submodule update --init --recursive && \
     ./autogen.sh && \

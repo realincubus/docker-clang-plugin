@@ -19,6 +19,8 @@ RUN pacman -Syy --noconfirm && \
 
 COPY raw_diff /root/raw_diff
 
+ENV CJ=$CONCURRENT_JOBS
+
 # get a clang install patch it, install it and remove all unnecessary stuff
 RUN cd ~ && \
     svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm && \
@@ -36,7 +38,7 @@ RUN cd ~ && \
     cd ~ && \
     cd build && \
     cmake -DCMAKE_BUILD_TYPE=release -DCMAKE_INSTALL_PREFIX=$HOME/install -G "Ninja" ../llvm && \
-    ninja -j 1 && \
+    ninja -j $CJ && \
     ninja install && \
     cd ~ && \
     rm -r build && \
