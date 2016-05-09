@@ -4,9 +4,9 @@
 ############################################################
 
 # ├─base/archlinux
-#   ├─realincubus/clang
+#   ├─incubus/clang
 
-FROM realincubus/clang
+FROM incubus/clang
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 COPY clang_3.9.patch /root/clang_3.9.patch

@@ -1,1 +1,1 @@
-docker build -t realincubus/pet .
+docker build -t incubus/pet .

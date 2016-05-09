@@ -4,11 +4,11 @@
 ############################################################
 
 # ├─base/archlinux
-#   ├─realincubus/clang
-#     ├─realincubus/pet
-#       ├─realincubus/plugin
+#   ├─incubus/clang
+#     ├─incubus/pet
+#       ├─incubus/plugin
 
-FROM realincubus/plugin
+FROM incubus/plugin
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # download the needed software 

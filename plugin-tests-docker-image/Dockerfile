@@ -4,12 +4,12 @@
 ############################################################
 
 # ├─base/archlinux
-#   ├─realincubus/clang
-#     ├─realincubus/pet
-#       ├─realincubus/pluto
-#         |-realincubus/plugin
+#   ├─incubus/clang
+#     ├─incubus/pet
+#       ├─incubus/pluto
+#         |-incubus/plugin
 
-FROM realincubus/plugin
+FROM incubus/plugin
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # build the tests 

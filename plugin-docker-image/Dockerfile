@@ -4,11 +4,11 @@
 ############################################################
 
 # ├─base/archlinux
-#   ├─realincubus/clang
-#     ├─realincubus/pet
-#       ├─realincubus/pluto
+#   ├─incubus/clang
+#     ├─incubus/pet
+#       ├─incubus/pluto
 
-FROM realincubus/pluto
+FROM incubus/pluto
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # install needed software # TODO move packages to their containers

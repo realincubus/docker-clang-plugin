@@ -4,10 +4,10 @@
 ############################################################
 
 # ├─base/archlinux
-#   ├─realincubus/clang
-#     ├─realincubus/pet
+#   ├─incubus/clang
+#     ├─incubus/pet
 
-FROM realincubus/pet
+FROM incubus/pet
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
    
 # install pluto 

@@ -1,1 +1,1 @@
-docker build -t realincubus/pluto .
+docker build -t incubus/pluto .

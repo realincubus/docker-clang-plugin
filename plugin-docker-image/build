@@ -1,1 +1,1 @@
-docker build -t realincubus/plugin .
+docker build -t incubus/plugin .

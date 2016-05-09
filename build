@@ -1,2 +1,2 @@
 export CONCURRENT_JOBS=2
-docker build -t realincubus/clang .
+docker build -t incubus/clang  .
