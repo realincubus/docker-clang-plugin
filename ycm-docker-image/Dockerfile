@@ -41,7 +41,7 @@ RUN mkdir /root/example
 
 COPY CMakeLists.txt /root/example/
 COPY main.cpp /root/example/
-COPY ycm_extra_conf.py /root/example/.ycm_extra_conf 
+COPY ycm_extra_conf.py /root/example/.ycm_extra_conf.py
 
 COPY bashrc /root/.bashrc
 
