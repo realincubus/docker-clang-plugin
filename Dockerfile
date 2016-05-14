@@ -18,6 +18,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -Scc 
 
 COPY raw_diff /root/raw_diff
+COPY export_symbols /root/export_symbols
 
 # get a clang install patch it, install it and remove all unnecessary stuff
 RUN cd ~ && \
@@ -33,11 +34,14 @@ RUN cd ~ && \
     cd ~ && \
     cd llvm/tools/clang && \
     patch -p0 < /root/raw_diff && \
+    cd ~ &&\
+    cd llvm/tools/clang/tools/libclang && \
+    cat /root/export_symbols >> libclang.exports && \
     cd ~ && \
     cd build && \
     cmake -DCMAKE_BUILD_TYPE=release -DCMAKE_INSTALL_PREFIX=$HOME/install -G "Ninja" ../llvm && \
     ninja -j 1 && \
-    ninja install && \
+    ninja install 
     cd ~ && \
     rm -r build && \
     rm -r llvm  

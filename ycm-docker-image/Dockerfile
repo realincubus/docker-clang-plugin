@@ -17,19 +17,23 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S pacman && \
     pacman-db-upgrade && \
     pacman --noconfirm --force -Syu && \
-    pacman --noconfirm -S vim ncurses && \
+    pacman --noconfirm -S vim ncurses python2 && \
     pacman --noconfirm --force -Scc
  
 # install pathogen
 RUN mkdir -p ~/.vim/autoload ~/.vim/bundle && \
     curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
+COPY ycm_patch /root/ycm_patch
+
 #TODO setup paths for libclang 
 RUN cd ~/.vim/bundle && \
-    export PATH=$HOME/install/:$PATH && \
+     export PATH=$HOME/install/:$PATH && \
     git clone https://github.com/Valloric/YouCompleteMe.git && \
     cd YouCompleteMe && \
     git submodule update --init --recursive && \
+    cd ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ && \
+    patch -p1 < ~/ycm_patch && \
     cd ~/.vim/bundle/YouCompleteMe/ && \
     ./install.py --clang-completer --system-libclang
 

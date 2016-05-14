@@ -1,0 +1,22 @@
+diff --git a/ycmd/completers/cpp/flags.py b/ycmd/completers/cpp/flags.py
+index cb74146..30cc526 100644
+--- a/ycmd/completers/cpp/flags.py
++++ b/ycmd/completers/cpp/flags.py
+@@ -35,7 +35,7 @@ from ycmd.responses import NoExtraConfDetected
+ 
+ INCLUDE_FLAGS = [ '-isystem', '-I', '-iquote', '-isysroot', '--sysroot',
+                   '-gcc-toolchain', '-include', '-include-pch', '-iframework',
+-                  '-F', '-imacros' ]
++                  '-F', '-imacros', '-Xclang' ]
+ 
+ # We need to remove --fcolor-diagnostics because it will cause shell escape
+ # sequences to show up in editors, which is bad. See Valloric/YouCompleteMe#1421
+@@ -166,7 +166,7 @@ def _CallExtraConfFlagsForFile( module, filename, client_data ):
+ 
+ def PrepareFlagsForClang( flags, filename ):
+   flags = _CompilerToLanguageFlag( flags )
+-  flags = _RemoveXclangFlags( flags )
++  #flags = _RemoveXclangFlags( flags )
+   flags = _RemoveUnusedFlags( flags, filename )
+   flags = _SanitizeFlags( flags )
+   return flags
