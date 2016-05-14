@@ -8,6 +8,8 @@
 FROM base/archlinux
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
+ARG JOBS=1
+
 # Update and force a refresh of all package lists even if they appear up to date.
 RUN pacman -Syy --noconfirm && \ 
     pacman --noconfirm --force -S archlinux-keyring && \
@@ -40,8 +42,8 @@ RUN cd ~ && \
     cd ~ && \
     cd build && \
     cmake -DCMAKE_BUILD_TYPE=release -DCMAKE_INSTALL_PREFIX=$HOME/install -G "Ninja" ../llvm && \
-    ninja -j 1 && \
-    ninja install 
+    ninja -j $JOBS && \
+    ninja install && \
     cd ~ && \
     rm -r build && \
     rm -r llvm  
