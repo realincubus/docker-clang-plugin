@@ -25,5 +25,5 @@ RUN cd ~ && \
     cd $HOME/pluto_install && \
     test -e lib/pluto/pluto-config.cmake && \
     test -e include/pluto/libpluto.h && \
-    if `$OSIZE -eq 1` ; then rm -rf $HOME/pluto ; fi
+    if `test $OSIZE -eq 1` ; then rm -rf $HOME/pluto ; fi
    
