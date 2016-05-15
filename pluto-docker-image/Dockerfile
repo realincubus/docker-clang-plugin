@@ -11,6 +11,7 @@ FROM incubus/pet
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ARG OSIZE=1
+ARG JOBS=1
    
 # install pluto 
 RUN cd ~ && \
@@ -19,7 +20,7 @@ RUN cd ~ && \
     git submodule update --init --recursive && \
     ./autogen.sh && \
     ./configure --enable-debug --prefix=$HOME/pluto_install && \
-    make && \
+    make -j $JOBS && \
     make install && \
     cd $HOME/pluto_install && \
     test -e lib/pluto/pluto-config.cmake && \

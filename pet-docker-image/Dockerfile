@@ -10,6 +10,7 @@ FROM incubus/clang
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ARG OSIZE=1
+ARG JOBS=2
 
 COPY clang_3.9.patch /root/clang_3.9.patch
 
@@ -31,7 +32,7 @@ RUN pacman -Syy --noconfirm && \
     cd .. && \
     ./autogen.sh && \
     ./configure --with-clang-prefix=$HOME/install --prefix=$HOME/pet_install --with-pic  && \
-    make && \
+    make -j $JOBS && \
     make pet &&\
     make pet_scop_cmp && \
     make install && \

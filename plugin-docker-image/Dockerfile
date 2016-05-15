@@ -13,6 +13,7 @@ MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 #TODO implement something to install the plugin and then remove the compilation folder
 ARG OSIZE=1
+ARG JOBS=2
 
 # install needed software # TODO move packages to their containers
 RUN pacman -Syy --noconfirm && \
@@ -32,5 +33,5 @@ RUN export PATH=$PATH:$HOME/pet_install:$HOME/pluto_install:$HOME/install && \
     cd ~ && \
     cd ClanPlugin && \
     cmake -G "Ninja" . && \
-    ninja
+    ninja -j $JOBS
 
