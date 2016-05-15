@@ -9,6 +9,8 @@
 FROM incubus/clang
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
+ARG OSIZE=1
+
 COPY clang_3.9.patch /root/clang_3.9.patch
 
 # install pet 
@@ -23,7 +25,7 @@ RUN pacman -Syy --noconfirm && \
     mkdir pet_install && \
     git clone https://github.com/realincubus/pet.git && \
     cd pet && \
-     git submodule update --init --recursive && \
+    git submodule update --init --recursive && \
     cd isl && \
     patch -p1 < /root/clang_3.9.patch && \
     cd .. && \
@@ -36,6 +38,7 @@ RUN pacman -Syy --noconfirm && \
     cd $HOME/pet_install/ && \
     test -e include/isl/aff.h && \
     test -e lib/libisl.so.15 && \
-    test -e lib/libpet_cxx.a
+    test -e lib/libpet_cxx.a && \
+    if `test $OSIZE -eq 1` ; then rm -rf $HOME/pet; else echo "did not remove the pet folder"; fi
     
 

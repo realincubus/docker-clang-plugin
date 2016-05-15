@@ -9,6 +9,7 @@ FROM base/archlinux
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ARG JOBS=1
+ARG OSIZE=1
 
 # Update and force a refresh of all package lists even if they appear up to date.
 RUN pacman -Syy --noconfirm && \ 
@@ -45,20 +46,6 @@ RUN cd ~ && \
     ninja -j $JOBS && \
     ninja install && \
     cd ~ && \
-    rm -r build && \
-    rm -r llvm  
+    if ` $OSIZE -eq 1 `; then rm -r build ; fi && \
+    if ` $OSIZE -eq 1 `; then rm -r llvm ; fi 
 
-# TODO move the patch installation to the begin
-#RUN pacman -Syy --noconfirm && \
-#    pacman --noconfirm --force -S archlinux-keyring && \
-#    pacman --noconfirm --force -S pacman && \
-#    pacman-db-upgrade && \
-#    pacman --noconfirm -S patch && \
-#    pacman --noconfirm --force -Scc && \
-#    cd ~ && \
-#    cd llvm/tools/clang && \
-#    patch -p0 < /root/raw_diff && \
-#    cd ~ && \
-#    cd build && \
-#    ninja -j 1 && \
-#    ninja install 

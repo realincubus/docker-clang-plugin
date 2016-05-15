@@ -11,6 +11,9 @@
 FROM incubus/pluto
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
+#TODO implement something to install the plugin and then remove the compilation folder
+ARG OSIZE=1
+
 # install needed software # TODO move packages to their containers
 RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
@@ -21,7 +24,7 @@ RUN pacman -Syy --noconfirm && \
 
 
 RUN cd ~ && \
-     git clone https://github.com/realincubus/ClanPlugin.git && \
+    git clone https://github.com/realincubus/ClanPlugin.git && \
     cd ClanPlugin
  
 # build the plugin out of source using pet, pluto and clang

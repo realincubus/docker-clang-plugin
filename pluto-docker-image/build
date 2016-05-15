@@ -1,1 +1,1 @@
-docker build -t incubus/pluto .
+docker build --build-arg OSIZE=0 -t incubus/pluto .
