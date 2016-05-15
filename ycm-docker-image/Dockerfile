@@ -17,7 +17,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S pacman && \
     pacman-db-upgrade && \
     pacman --noconfirm --force -Syu && \
-    pacman --noconfirm -S vim ncurses python2 && \
+    pacman --noconfirm -S vim ncurses && \
     pacman --noconfirm --force -Scc
  
 # install pathogen
