@@ -26,9 +26,13 @@ RUN mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 
 COPY ycm_patch /root/ycm_patch
 
+# i choose not in install python3 which is standard for 
+# arch this is why /usr/bin/env does not return the pyhton interpreter 
+# if /usr/bin/python is not linked to python2
 #TODO setup paths for libclang 
 RUN cd ~/.vim/bundle && \
-     export PATH=$HOME/install/:$PATH && \
+    ln -s /usr/bin/python2 /usr/bin/python && \
+    export PATH=$HOME/install/:$PATH && \
     git clone https://github.com/Valloric/YouCompleteMe.git && \
     cd YouCompleteMe && \
     git submodule update --init --recursive && \
