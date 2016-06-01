@@ -24,7 +24,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -Scc && \
     cd ~ && \
     mkdir pet_install && \
-    git clone https://github.com/realincubus/pet.git && \
+     git clone https://github.com/realincubus/pet.git && \
     cd pet && \
     git submodule update --init --recursive && \
     cd isl && \
