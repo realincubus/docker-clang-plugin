@@ -26,8 +26,8 @@ RUN pacman -Syy --noconfirm && \
 
 RUN cd ~ && \
     git clone https://github.com/realincubus/ClanPlugin.git && \
-    git submodule update  --init && \
-    cd ClanPlugin
+    cd ClanPlugin && \
+    git submodule update --init
  
 # build the plugin out of source using pet, pluto and clang
 RUN export PATH=$PATH:$HOME/pet_install:$HOME/pluto_install:$HOME/install && \
