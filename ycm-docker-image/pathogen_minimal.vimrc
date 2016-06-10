@@ -12,7 +12,7 @@ set softtabstop=2
 set number
 
 function! g:EmitAcc()
-    let g:emit_type="-emit-acc"
+    let g:emit_type="-emit-openacc"
     YcmCompleter ClearCompilationFlagCache 
     YcmRestartServer 
     "YcmForceCompileAndDiagnostics
@@ -28,7 +28,7 @@ function! g:EmitTbb()
 endfunction
 
 function! g:EmitOmp()
-    let g:emit_type="-emit-omp"
+    let g:emit_type="-emit-openmp"
     YcmCompleter ClearCompilationFlagCache 
     YcmRestartServer 
     "YcmForceCompileAndDiagnostics
@@ -56,6 +56,7 @@ map <F2> :call g:EmitOmp() <CR>
 map <F3> :call g:EmitTbb() <CR>
 map <F4> :call g:EmitCilk() <CR>
 map <F5> :call g:EmitHpx() <CR>
+map <F6> :YcmForceCompileAndDiagnostics <CR>
 
 
 set hlsearch 
@@ -64,7 +65,7 @@ set hlsearch
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:ycm_echo_current_diagnostic = 1
-let g:emit_type="-emit-tbb"
+let g:emit_type=""
 let g:ycm_extra_conf_vim_data = ['g:emit_type']
 
 " better key bindings for UltiSnipsExpandTrigger

@@ -113,11 +113,12 @@ def FlagsForFile( filename, **kwargs ):
 
     client_data = kwargs['client_data']
     override_flag = str(client_data['g:emit_type'])
-
-    # search for the emit type flag and replace it with the one from vim
-    for i,flag in enumerate(final_flags):
-        if flag.startswith( '-emit' ) : 
-            final_flags[i] = override_flag 
+    
+    if override_flag:
+        # search for the emit type flag and replace it with the one from vim
+        for i,flag in enumerate(final_flags):
+            if flag.startswith( '-emit' ) : 
+                final_flags[i] = override_flag 
 
   else:
     relative_to = DirectoryOfThisScript()
