@@ -102,7 +102,7 @@ def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):
   return new_flags
 
 
-def FlagsForFile( filename ):
+def FlagsForFile( filename, **kwargs ):
   if database:
     # Bear in mind that compilation_info.compiler_flags_ does NOT return a
     # python list, but a "list-like" StringVec object
@@ -111,13 +111,14 @@ def FlagsForFile( filename ):
       compilation_info.compiler_flags_,
       compilation_info.compiler_working_dir_ )
 
-    # NOTE: This is just for YouCompleteMe; it's highly likely that your project
-    # does NOT need to remove the stdlib flag. DO NOT USE THIS IN YOUR
-    # ycm_extra_conf IF YOU'RE NOT 100% YOU NEED IT.
-    try:
-      final_flags.remove( '-stdlib=libc++' )
-    except ValueError:
-      pass
+    client_data = kwargs['client_data']
+    override_flag = str(client_data['g:emit_type'])
+
+    # search for the emit type flag and replace it with the one from vim
+    for i,flag in enumerate(final_flags):
+        if flag.startswith( '-emit' ) : 
+            final_flags[i] = override_flag 
+
   else:
     relative_to = DirectoryOfThisScript()
     final_flags = MakeRelativePathsInFlagsAbsolute( flags, relative_to )
