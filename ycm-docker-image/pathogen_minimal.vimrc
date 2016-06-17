@@ -57,7 +57,7 @@ map <F3> :call g:EmitTbb() <CR>
 map <F4> :call g:EmitCilk() <CR>
 map <F5> :call g:EmitHpx() <CR>
 map <F6> :YcmForceCompileAndDiagnostics <CR>
-
+map <F7> :YcmCompleter FixIt <CR>
 
 set hlsearch 
 

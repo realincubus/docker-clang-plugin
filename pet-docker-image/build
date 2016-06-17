@@ -1,1 +1,1 @@
-docker build --build-arg OSIZE=0 -t incubus/pet .
+docker build --no-cache --build-arg OSIZE=0 -t incubus/pet .

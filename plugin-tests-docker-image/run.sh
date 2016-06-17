@@ -41,6 +41,8 @@ ctest --no-compress-output -T Test .
 # run pluto tests
 cd ~ 
 cd pluto/test 
+git pull || true
+make
 cmake .
 ctest --no-compress-output -T Test . 
 
@@ -49,6 +51,8 @@ cd ~
 cd pet
 mkdir pet_cmake_testing
 cd pet_cmake_testing
+git pull 
+make
 cmake ..
 ctest --no-compress-output -T Test . 
 
