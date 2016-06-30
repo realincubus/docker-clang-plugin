@@ -1,1 +1,1 @@
-docker build -t incubus/plugin-tests .
+docker build --no-cache -t incubus/plugin-tests .
