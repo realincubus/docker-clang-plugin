@@ -1,0 +1,41 @@
+diff --git a/interface/extract_interface.cc b/interface/extract_interface.cc
+index 3663ef7..291ea28 100644
+--- a/interface/extract_interface.cc
++++ b/interface/extract_interface.cc
+@@ -65,6 +65,7 @@
+ #include <clang/Frontend/Utils.h>
+ #include <clang/Lex/HeaderSearch.h>
+ #include <clang/Lex/Preprocessor.h>
++#include <clang/Lex/PreprocessorOptions.h>
+ #include <clang/Parse/ParseAST.h>
+ #include <clang/Sema/Sema.h>
+ 
+@@ -199,7 +200,7 @@ static CompilerInvocation *construct_invocation(const char *filename,
+ 		driver->BuildCompilation(llvm::ArrayRef<const char *>(Argv)));
+ 	JobList &Jobs = compilation->getJobs();
+ 
+-	Command *cmd = cast<Command>(ClangAPI::command(*Jobs.begin()));
++	auto cmd = Jobs.begin();
+ 	if (strcmp(cmd->getCreator().getName(), "clang"))
+ 		return NULL;
+ 
+@@ -352,8 +353,8 @@ int main(int argc, char *argv[])
+ 	Clang->createSourceManager(Clang->getFileManager());
+ 	TargetInfo *target = create_target_info(Clang, Diags);
+ 	Clang->setTarget(target);
+-	CompilerInvocation::setLangDefaults(Clang->getLangOpts(), IK_C,
+-					    LangStandard::lang_unspecified);
++	//CompilerInvocation::setLangDefaults(Clang->getLangOpts(), IK_C,
++	//				    LangStandard::lang_unspecified);
+ 	HeaderSearchOptions &HSO = Clang->getHeaderSearchOpts();
+ 	LangOptions &LO = Clang->getLangOpts();
+ 	PreprocessorOptions &PO = Clang->getPreprocessorOpts();
+@@ -372,7 +373,7 @@ int main(int argc, char *argv[])
+ 	create_preprocessor(Clang);
+ 	Preprocessor &PP = Clang->getPreprocessor();
+ 
+-	PP.getBuiltinInfo().InitializeBuiltins(PP.getIdentifierTable(), LO);
++	//PP.getBuiltinInfo().InitializeBuiltins(PP.getIdentifierTable(), LO);
+ 
+ 	const FileEntry *file = Clang->getFileManager().getFile(InputFilename);
+ 	assert(file);

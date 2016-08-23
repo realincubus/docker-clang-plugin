@@ -12,7 +12,7 @@ MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 ARG OSIZE=1
 ARG JOBS=2
 
-COPY clang_3.9.patch /root/clang_3.9.patch
+COPY clang_4.0.patch /root/clang.patch
 
 # install pet 
 RUN pacman -Syy --noconfirm && \
@@ -28,7 +28,7 @@ RUN pacman -Syy --noconfirm && \
     cd pet && \
     git submodule update --init --recursive && \
     cd isl && \
-    patch -p1 < /root/clang_3.9.patch && \
+    patch -p1 < /root/clang.patch && \
     cd .. && \
     ./autogen.sh && \
     ./configure --with-clang-prefix=$HOME/install --prefix=$HOME/pet_install --with-pic  && \
