@@ -60,9 +60,9 @@ RUN cd ~ && \
     export PATH=$HOME/pet_install/:$PATH && \
     export PATH=$HOME/pluto_install/:$PATH && \
     export PATH=$HOME/install/:$PATH && \
+    export PATH=$HOME/install/lib:$PATH && \
     export PATH=$HOME/install/bin:$PATH && \
     export PATH=$HOME/ClanPlugin/:$PATH && \
-    export PATH=$HOME/ClanPlugin/lib:$PATH && \
     CC=clang CXX=clang++ cmake . && \
     make 
 
