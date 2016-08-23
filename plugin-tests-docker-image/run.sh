@@ -22,6 +22,7 @@ make install
 cd ~ 
 cd ClanPlugin
 git pull
+export CPATH=$CPATH:$HOME/pet_install/include:$HOME/pluto_install/include/pluto/:$HOME/pluto_install/include/pluto_codegen_cxx
 export PATH=$PATH:$HOME/pet_install
 export PATH=$PATH:$HOME/pluto_install
 export PATH=$PATH:$HOME/install
@@ -30,10 +31,10 @@ ninja
 # run plugin tests
 cd ~ 
 cd clang_plugin_tests 
-export PATH=$HOME/pet_install/:$PATH && \
-export PATH=$HOME/pluto_install/:$PATH && \
-export PATH=$HOME/install/:$PATH && \
-export PATH=$HOME/ClanPlugin/:$PATH && \
+#export PATH=$HOME/pet_install/:$PATH && \
+#export PATH=$HOME/pluto_install/:$PATH && \
+#export PATH=$HOME/install/:$PATH && \
+#export PATH=$HOME/ClanPlugin/:$PATH && \
 git pull 
 cmake .
 ctest --no-compress-output -T Test . 
