@@ -31,7 +31,7 @@ RUN cd ~ && \
  
 # build the plugin out of source using pet, pluto and clang
 RUN export PATH=$PATH:$HOME/pet_install:$HOME/pluto_install:$HOME/install && \
-    export CPATH=$CPATH:$HOME/pluto_install/include:$HOME/pet_install/include && \
+    export CPATH=$CPATH:$HOME/pet_install/include:$HOME/pluto_install/include/pluto/:$HOME/pluto_install/include/pluto_codegen_cxx && \
     cd ~ && \
     cd ClanPlugin && \
     cmake -G "Ninja" . && \
