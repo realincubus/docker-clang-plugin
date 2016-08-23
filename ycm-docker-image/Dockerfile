@@ -33,6 +33,7 @@ COPY ycm_patch /root/ycm_patch
 RUN cd ~/.vim/bundle && \
     ln -s /usr/bin/python2 /usr/bin/python && \
     export PATH=$HOME/install/:$PATH && \
+    export PATH=$HOME/install/lib:$PATH && \
     git clone https://github.com/Valloric/YouCompleteMe.git && \
     cd YouCompleteMe && \
     git submodule update --init --recursive && \
