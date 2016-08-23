@@ -64,6 +64,7 @@ RUN cd ~ && \
     export PATH=$HOME/install/lib:$PATH && \
     export PATH=$HOME/install/bin:$PATH && \
     export PATH=$HOME/ClanPlugin/:$PATH && \
+    export PATH=$HOME/ClanPlugin/lib:$PATH && \
     CC=clang CXX=clang++ cmake . && \
     make 
 
