@@ -22,6 +22,7 @@ RUN mkdir $HOME/libs/ && \
     pacman --noconfirm -Rs git ninja grep sed patch bison flex autogen autoconf automake  libyaml intel-tbb
 
 COPY bashrc /root/.bashrc
+COPY CMakeLists.txt /root/example/CMakeLists.txt
 
  
     
