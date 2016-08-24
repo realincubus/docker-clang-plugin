@@ -1,0 +1,8 @@
+# to find the libraries 
+export LD_LIBRARY_PATH=$HOME/libs:$LD_LIBRARY_PATH
+
+alias vi='vim'
+
+cd ~/example
+
+vim main.cpp
