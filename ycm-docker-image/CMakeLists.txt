@@ -8,7 +8,7 @@ find_package( optimizer_plugin )
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14" )
 
 #TODO move this to optimizer_plugin-config.cmake as a macro
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xclang -load -Xclang ${OPTIMIZER_PLUGIN_LIBRARY} -Xclang -add-plugin -Xclang clan -Xclang -plugin-arg-clan -Xclang -emit-openmp" )
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fplugin=${OPTIMIZER_PLUGIN_LIBRARY} -Xclang -plugin-arg-clan -Xclang -emit-openmp" )
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xclang -plugin-arg-clan -Xclang -redirect-stdout -Xclang -plugin-arg-clan -Xclang /dev/null" )
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Xclang -plugin-arg-clan -Xclang -redirect-stderr -Xclang -plugin-arg-clan -Xclang /dev/null" )
 
