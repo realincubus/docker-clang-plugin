@@ -9,7 +9,7 @@
 #       ├─incubus/plugin
 #         ├─incubus/ycm
 
-FROM incubus/ycm
+FROM incubus/ycm-large
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 RUN mkdir $HOME/libs/ && \
