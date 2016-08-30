@@ -34,7 +34,7 @@ RUN cd ~/.vim/bundle && \
     ln -s /usr/bin/python2 /usr/bin/python && \
     export PATH=$HOME/install/:$PATH && \
     export PATH=$HOME/install/lib:$PATH && \
-    git clone https://github.com/Valloric/YouCompleteMe.git && \
+    git clone --depth=1 https://github.com/Valloric/YouCompleteMe.git && \
     cd YouCompleteMe && \
     git submodule update --init --recursive && \
     cd ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ && \
@@ -56,15 +56,15 @@ COPY bashrc /root/.bashrc
 
 # initialize the example project
 
-RUN cd ~ && \
-    cd example && \
-    export PATH=$HOME/pet_install/:$PATH && \
-    export PATH=$HOME/pluto_install/:$PATH && \
-    export PATH=$HOME/install/:$PATH && \
-    export PATH=$HOME/install/lib:$PATH && \
-    export PATH=$HOME/install/bin:$PATH && \
-    export PATH=$HOME/ClanPlugin/:$PATH && \
-    export PATH=$HOME/ClanPlugin/lib:$PATH && \
-    CC=clang CXX=clang++ cmake . && \
-    make 
-
+#RUN cd ~ && \
+#    cd example && \
+#    export PATH=$HOME/pet_install/:$PATH && \
+#    export PATH=$HOME/pluto_install/:$PATH && \
+#    export PATH=$HOME/install/:$PATH && \
+#    export PATH=$HOME/install/lib:$PATH && \
+#    export PATH=$HOME/install/bin:$PATH && \
+#    export PATH=$HOME/ClanPlugin/:$PATH && \
+#    export PATH=$HOME/ClanPlugin/lib:$PATH && \
+#    CC=clang CXX=clang++ cmake . && \
+#    make 
+#

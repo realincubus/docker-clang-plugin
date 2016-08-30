@@ -15,11 +15,11 @@ ARG JOBS=1
    
 # install pluto 
 RUN cd ~ && \
-    git clone https://github.com/realincubus/pluto_clang.git pluto && \
+    git clone --depth=1 https://github.com/realincubus/pluto_clang.git pluto && \
     cd pluto && \
     git submodule update --init --recursive && \
     ./autogen.sh && \
-    ./configure --enable-debug --prefix=$HOME/pluto_install && \
+    ./configure --with-pic --enable-debug --prefix=$HOME/pluto_install && \
     make -j $JOBS && \
     make install && \
     cd $HOME/pluto_install && \

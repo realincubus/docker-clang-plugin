@@ -1,1 +1,1 @@
-docker build --build-arg OSIZE=0 -t incubus/pluto .
+docker build --no-cache --force-rm --build-arg  OSIZE=0 -t incubus/pluto .
