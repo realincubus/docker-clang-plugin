@@ -10,7 +10,7 @@
 #         ├─incubus/plugin
 #           ├─incubus/ycm
 
-FROM incubus/ycm
+FROM incubus/ycm-large
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # download the needed software 
