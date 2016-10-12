@@ -24,5 +24,7 @@ RUN mkdir $HOME/libs/ && \
 COPY bashrc /root/.bashrc
 COPY CMakeLists.txt /root/example/CMakeLists.txt
 
- 
+# somehow i have to do this 
+RUN cd example && \
+    make 
     
