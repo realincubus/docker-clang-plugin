@@ -25,6 +25,7 @@ COPY bashrc /root/.bashrc
 COPY CMakeLists.txt /root/example/CMakeLists.txt
 
 # somehow i have to do this 
-RUN cd $HOME/example && \
+RUN source $HOME/.bashrc && \
+    cd $HOME/example && \
     make 
     
