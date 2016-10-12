@@ -10,7 +10,7 @@
 #         ├─incubus/plugin
 #           ├─incubus/ycm
 
-FROM incubus/ycm-large
+FROM incubus/plugin-tests
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # download the needed software 
@@ -18,7 +18,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
     pacman --noconfirm --force -S pacman && \
     pacman-db-upgrade && \
-    pacman --noconfirm --force -Syu && \
+    #pacman --noconfirm --force -Syu && \
     pacman --noconfirm -S zsh && \
     pacman --noconfirm --force -Scc
  
