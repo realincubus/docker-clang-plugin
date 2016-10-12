@@ -25,7 +25,7 @@ COPY bashrc /root/.bashrc
 COPY CMakeLists.txt /root/example/CMakeLists.txt
 
 # somehow i have to do this 
-RUN source $HOME/.bashrc && \
+RUN export LD_LIBRARY_PATH=$HOME/libs:$LD_LIBRARY_PATH && \
     cd $HOME/example && \
     make 
     
