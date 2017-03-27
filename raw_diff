@@ -2,21 +2,21 @@ Index: include/clang/Frontend/CompilerInstance.h
 ===================================================================
 --- include/clang/Frontend/CompilerInstance.h
 +++ include/clang/Frontend/CompilerInstance.h
-@@ -780,6 +780,9 @@
-   void addDependencyCollector(std::shared_ptr<DependencyCollector> Listener) {
-     DependencyCollectors.push_back(std::move(Listener));
+@@ -778,6 +778,9 @@ public:
+     return ModuleLoader::HadFatalFailure;
    }
-+
+ 
 +  /// load plugins that were added by -load
 +  void loadPlugins();
- };
++
+   GlobalModuleIndex *loadGlobalModuleIndex(SourceLocation TriggerLoc) override;
  
- } // end namespace clang
+   bool lookupMissingImports(StringRef Name, SourceLocation TriggerLoc) override;
 Index: lib/Frontend/ASTUnit.cpp
 ===================================================================
 --- lib/Frontend/ASTUnit.cpp
 +++ lib/Frontend/ASTUnit.cpp
-@@ -1135,6 +1135,8 @@
+@@ -1141,6 +1141,8 @@ bool ASTUnit::Parse(std::shared_ptr<PCHContainerOperations> PCHContainerOps,
    llvm::CrashRecoveryContextCleanupRegistrar<TopLevelDeclTrackerAction>
      ActCleanup(Act.get());
  
@@ -29,7 +29,7 @@ Index: lib/Frontend/CompilerInstance.cpp
 ===================================================================
 --- lib/Frontend/CompilerInstance.cpp
 +++ lib/Frontend/CompilerInstance.cpp
-@@ -45,6 +45,7 @@
+@@ -47,6 +47,7 @@
  #include "llvm/Support/Signals.h"
  #include "llvm/Support/Timer.h"
  #include "llvm/Support/raw_ostream.h"
@@ -37,11 +37,10 @@ Index: lib/Frontend/CompilerInstance.cpp
  #include <sys/stat.h>
  #include <system_error>
  #include <time.h>
-@@ -1753,3 +1754,15 @@
-   return false;
+@@ -1533,6 +1534,19 @@ bool CompilerInstance::loadModuleFile(StringRef FileName) {
+   }
  }
- void CompilerInstance::resetAndLeakSema() { BuryPointer(takeSema()); }
-+
+ 
 +void
 +CompilerInstance::loadPlugins(){
 +  // Load any requested plugins.
@@ -53,11 +52,16 @@ Index: lib/Frontend/CompilerInstance.cpp
 +        << Path << Error;
 +  }
 +}
++
++
+ ModuleLoadResult
+ CompilerInstance::loadModule(SourceLocation ImportLoc,
+                              ModuleIdPath Path,
 Index: lib/FrontendTool/ExecuteCompilerInvocation.cpp
 ===================================================================
 --- lib/FrontendTool/ExecuteCompilerInvocation.cpp
 +++ lib/FrontendTool/ExecuteCompilerInvocation.cpp
-@@ -185,14 +185,8 @@
+@@ -190,14 +190,8 @@ bool clang::ExecuteCompilerInvocation(CompilerInstance *Clang) {
    }
  
    // Load any requested plugins.
@@ -72,5 +76,5 @@ Index: lib/FrontendTool/ExecuteCompilerInvocation.cpp
 +  Clang->loadPlugins();
 +
  
-   // Honor -mllvm.
-   //
+   // Check if any of the loaded plugins replaces the main AST action
+   for (FrontendPluginRegistry::iterator it = FrontendPluginRegistry::begin(),
