@@ -6,7 +6,7 @@
 # ├─base/archlinux
 #   ├─incubus/clang
 
-FROM incubus/clang_new
+FROM incubus/clang
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ARG OSIZE=1
