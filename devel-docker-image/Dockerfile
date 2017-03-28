@@ -10,7 +10,7 @@
 #         ├─incubus/plugin
 #           ├─incubus/ycm
 
-FROM incubus/plugin-tests
+FROM incubus/ycm
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # download the needed software 
@@ -25,3 +25,13 @@ RUN pacman -Syy --noconfirm && \
 
 COPY bashrc /root/.bashrc
 COPY bashrc /root/.zshrc
+COPY update_all_repos /usr/local/bin/
+COPY check_upload_state.sh /root/
+COPY update_all.sh /root/
+RUN git config --global credential.helper cache '--timeout=10000'
+
+RUN cd $HOME/.vim/bundle/ && \
+    git clone https://github.com/SirVer/ultisnips.git && \
+    git clone https://github.com/realincubus/vim-snippets && \
+    git clone https://github.com/rhysd/vim-clang-format
+    

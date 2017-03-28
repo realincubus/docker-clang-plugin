@@ -20,9 +20,6 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S db gcc vim git cmake make python2 grep sed ninja patch && \
     pacman --noconfirm --force -Scc 
 
-COPY raw_diff /root/raw_diff
-COPY export_symbols /root/export_symbols
-
 # get a clang install patch it, install it and remove all unnecessary stuff
 RUN cd ~ && \
     git clone --depth=1 https://github.com/llvm-mirror/llvm.git && \
@@ -30,8 +27,12 @@ RUN cd ~ && \
     git clone --depth=1 https://github.com/llvm-mirror/clang.git && \
     cd ~ && \
     mkdir install && \
-    mkdir build && \
-    cd ~ && \
+    mkdir build 
+
+COPY raw_diff /root/raw_diff
+COPY export_symbols /root/export_symbols
+
+RUN cd ~ && \
     cd llvm/tools/clang && \
     patch -p0 < /root/raw_diff && \
     cd ~ &&\

@@ -1,2 +1,2 @@
-docker rmi incubus/clang
-docker build --no-cache --build-arg OSIZE=0 --build-arg JOBS=2 -t incubus/clang  .
+#docker rmi incubus/clang
+docker build --build-arg OSIZE=0 --build-arg JOBS=2 -t incubus/clang_new  .

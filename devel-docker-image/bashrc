@@ -12,6 +12,9 @@ export CPATH=$HOME/pluto_install/include/pluto/:$HOME/pluto_install/include/plut
 
 alias vi='vim'
 alias ls='ls -lh --color=auto'
+alias compare='vimdiff main.opt.cpp main.reference.cpp'
+alias makeref='cp main.opt.cpp main.reference.cpp; git add main.reference.cpp'
+alias tbb='./../../test_optimize.sh . tbb'
 
 export TERM=xterm
 export EDITOR=vim

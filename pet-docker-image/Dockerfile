@@ -6,13 +6,13 @@
 # ├─base/archlinux
 #   ├─incubus/clang
 
-FROM incubus/clang
+FROM incubus/clang_new
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ARG OSIZE=1
 ARG JOBS=2
 
-COPY clang_4.0.patch /root/clang.patch
+COPY clang_5.0.patch /root/clang.patch
 
 # install pet 
 RUN pacman -Syy --noconfirm && \
@@ -24,7 +24,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -Scc && \
     cd ~ && \
     mkdir pet_install && \
-     git clone https://github.com/realincubus/pet.git && \
+     git clone --depth=1 https://github.com/realincubus/pet.git && \
     cd pet && \
     git submodule update --init --recursive && \
     cd isl && \

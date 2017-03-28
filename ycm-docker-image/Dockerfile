@@ -7,8 +7,9 @@
 #   ├─incubus/clang
 #     ├─incubus/pet
 #       ├─incubus/plugin
+#         ├─incubus/plugin-tests
 
-FROM incubus/plugin
+FROM incubus/plugin-tests
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # download the needed software 
