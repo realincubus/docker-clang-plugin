@@ -21,8 +21,8 @@ RUN mkdir $HOME/libs/ && \
     rm -rf $HOME/.vim/bundle/YouCompleteMe/.git /usr/share/locale/* && \
     pacman --noconfirm -Rs git ninja grep sed patch bison flex autogen autoconf automake  libyaml intel-tbb
 
-COPY bashrc /root/.bashrc
-COPY CMakeLists.txt /root/example/CMakeLists.txt
+ADD bashrc /root/.bashrc
+ADD CMakeLists.txt /root/example/CMakeLists.txt
 
 # somehow i have to do this 
 RUN export LD_LIBRARY_PATH=$HOME/libs:$LD_LIBRARY_PATH && \
