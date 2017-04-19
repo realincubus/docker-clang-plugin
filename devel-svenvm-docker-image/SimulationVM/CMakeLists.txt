@@ -18,6 +18,7 @@ SET( CMAKE_EXPORT_COMPILE_COMMANDS on )
 
 #INCLUDE_DIRECTORIES( )
 ADD_EXECUTABLE(bin_simvm main.c )
-
 TARGET_LINK_LIBRARIES( bin_simvm m )
 
+ADD_EXECUTABLE(bin_simvm_v2 main_v2.c )
+TARGET_LINK_LIBRARIES( bin_simvm_v2 m )
