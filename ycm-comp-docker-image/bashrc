@@ -1,5 +1,6 @@
 # to find the libraries 
 export LD_LIBRARY_PATH=$HOME/libs:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/pluto_install/lib/
 
 alias vi='vim'
 
