@@ -61,6 +61,9 @@ RUN cd ~ && \
     cd example && \
     export PATH=$HOME/pet_install/:$PATH && \
     export PATH=$HOME/pluto_install/:$PATH && \
+    export LD_LIBRARY_PATH=$HOME/install/lib/:$LD_LIBRARY_PATH && \
+    export LD_LIBRARY_PATH=$HOME/ClanPlugin/lib/:$LD_LIBRARY_PATH && \
+    export LD_LIBRARY_PATH=$HOME/pet_install/lib/:$LD_LIBRARY_PATH && \
     export LD_LIBRARY_PATH=$HOME/pluto_install/lib/:$LD_LIBRARY_PATH && \
     export PATH=$HOME/install/:$PATH && \
     export PATH=$HOME/install/lib:$PATH && \
