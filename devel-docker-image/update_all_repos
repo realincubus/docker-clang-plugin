@@ -1,0 +1,19 @@
+#!/bin/bash 
+
+cd ~/pet 
+git pull
+make && make install
+
+cd ~/pluto 
+git pull
+
+cd ~/pluto/pluto_codegen_cxx/
+git checkout master
+git pull
+make && make install
+
+cd ~/pluto
+make && make install
+
+cd ~/ClanPlugin
+ninja

@@ -10,7 +10,7 @@
 #         ├─incubus/plugin
 #           ├─incubus/ycm
 
-FROM incubus/ycm
+FROM incubus/ycm-large
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # download the needed software 
@@ -23,11 +23,11 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -Scc
  
 
-COPY bashrc /root/.bashrc
-COPY bashrc /root/.zshrc
-COPY update_all_repos /usr/local/bin/
-COPY check_upload_state.sh /root/
-COPY update_all.sh /root/
+ADD bashrc /root/.bashrc
+ADD bashrc /root/.zshrc
+ADD update_all_repos /usr/local/bin/
+ADD check_upload_state.sh /root/
+ADD update_all.sh /root/
 RUN git config --global credential.helper cache '--timeout=10000'
 
 RUN cd $HOME/.vim/bundle/ && \
