@@ -59,6 +59,7 @@ ADD bashrc /root/.bashrc
 
 RUN cd ~ && \
     cd example && \
+    source ~/.bashrc && \
     export PATH=$HOME/pet_install/:$PATH && \
     export PATH=$HOME/pluto_install/:$PATH && \
     export PATH=$HOME/install/:$PATH && \
