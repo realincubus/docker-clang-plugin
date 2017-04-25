@@ -14,9 +14,8 @@ ARG OSIZE=1
 # Update and force a refresh of all package lists even if they appear up to date.
 RUN pacman -Syy --noconfirm && \ 
     pacman --noconfirm --force -S archlinux-keyring && \
-    pacman --noconfirm --force -S pacman && \
-    pacman-db-upgrade && \
     pacman --noconfirm --force -Syu pacman && \
+    pacman-db-upgrade && \
     pacman --noconfirm --force -S db gcc vim git cmake make python2 grep sed ninja patch && \
     pacman --noconfirm --force -Scc 
 
