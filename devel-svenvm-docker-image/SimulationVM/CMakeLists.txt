@@ -3,8 +3,6 @@ PROJECT(simvm)
 
 SET( CMAKE_BUILD_TYPE RELEASE )
 
-#SET( CMAKE_C_COMPILER clang++ )
-#SET( CMAKE_CXX_COMPILER clang++ )
 SET( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=native" )
 SET( CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall -pedantic -DGLIBCXX_DEBUG -fsanitize=address" )
 SET( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS} -std=c++1y" )
@@ -22,3 +20,5 @@ TARGET_LINK_LIBRARIES( bin_simvm m )
 
 ADD_EXECUTABLE(bin_simvm_v2 main_v2.c )
 TARGET_LINK_LIBRARIES( bin_simvm_v2 m )
+
+ADD_EXECUTABLE(bin_simvm_v3 main_v3.cpp )
