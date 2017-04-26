@@ -1,0 +1,2 @@
+killall Xvnc tvncconfig
+runuser -l $user -c "/opt/TurboVNC/bin/vncserver -fg -autokill"

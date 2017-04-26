@@ -1,0 +1,15 @@
+diff --git a/unix/Xvnc/programs/Xserver/hw/vnc/rfbssl_gnutls.c b/unix/Xvnc/programs/Xserver/hw/vnc/rfbssl_gnutls.c
+index 81e8775c..e061b427 100644
+--- a/unix/Xvnc/programs/Xserver/hw/vnc/rfbssl_gnutls.c
++++ b/unix/Xvnc/programs/Xserver/hw/vnc/rfbssl_gnutls.c
+@@ -105,7 +105,9 @@ rfbSslCtx *rfbssl_init(rfbClientPtr cl, Bool anon)
+     }
+     if (anon) {
+         static const int priority[] = { GNUTLS_KX_ANON_DH, 0 };
+-        if ((ret = gnutls_kx_set_priority(ctx->session, priority)) !=
++	const char* err_pos = NULL;
++        //if ((ret = gnutls_kx_set_priority(ctx->session, priority)) !=
++        if ((ret = gnutls_priority_set_direct(ctx->session, "NORMAL:+ANON-DH", &err_pos)) !=
+             GNUTLS_E_SUCCESS) {
+             rfbssl_error("gnutls_kx_set_priority()", ret);
+             goto bailout;
