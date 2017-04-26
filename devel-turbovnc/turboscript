@@ -7,5 +7,8 @@ chown -R $user /home/$user/.vnc
 cp /data/.xinitrc /home/$user/
 chown $user /home/$user/.xinitrc
 chown $user /home/$user
+cp /tmp/xstartup.turbovnc /home/$user/.vnc/xstartup.turbovnc 
+
+chown $user:users -R /home/$user/.vnc 
 runuser -l $user -c "/opt/TurboVNC/bin/vncserver -fg -autokill"
 

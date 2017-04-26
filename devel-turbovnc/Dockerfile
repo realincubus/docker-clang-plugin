@@ -22,7 +22,7 @@ RUN pacman -Syy --noconfirm && \
 	turbojpeg \
 	cmake \
 	gcc \
-	fluxbox && \
+	lxde-common lxsession openbox && \
     pacman --noconfirm --force -Scc
 
 ADD tvnc_gnutls.patch /tvnc_gnutls.patch 
@@ -41,6 +41,11 @@ ADD xinitrc /data/.xinitrc
 
 # TODO move to usual install stuff
 RUN pacman --noconfirm --force -S xorg-xauth xorg-xkbcomp xkeyboard-config
-RUN pacman --noconfirm --force -S sudo xorg-server xorg-xinit xorg-utils xorg-server-utils xf86-video-vesa fluxbox xterm
+RUN pacman --noconfirm --force -S sudo xorg-server xorg-xinit xorg-utils xorg-server-utils xf86-video-vesa xterm
 
 ADD restart /restart
+
+ADD xstartup /tmp/xstartup.turbovnc
+
+RUN pacman --noconfirm --force -S lxpanel
+
