@@ -17,8 +17,8 @@ alias ls='ls -lh --color=auto'
 alias compare='vimdiff main.opt.cpp main.reference.cpp'
 alias makeref='cp main.opt.cpp main.reference.cpp; git add main.reference.cpp'
 alias tbb='./../../test_optimize.sh . tbb'
-alias omp='./../../test_optimize.sh . omp'
-alias acc='./../../test_optimize.sh . acc'
+alias omp='./../../test_optimize.sh . openmp'
+alias acc='./../../test_optimize.sh . openacc'
 alias cilk='./../../test_optimize.sh . cilk'
 
 export TERM=xterm
