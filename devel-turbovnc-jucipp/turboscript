@@ -1,0 +1,12 @@
+#!/bin/bash
+useradd -G users -o -u $uid $user
+rm -r /usr/lib/libclang.so*
+#cp /root/install/lib/libclang.so* /usr/lib/ 
+#ln -s /usr/lib/libclang.so /usr/lib/libclang.so.4
+#ln -s /usr/lib/libclang.so /usr/lib/libclang.so.4.0
+chown $user:users -R /root
+cp -r /data/bashrc /home/$user/.bashrc
+cp -r /data/example /home/$user/example
+chown $user:users -R /home/$user/
+
+/turboscript

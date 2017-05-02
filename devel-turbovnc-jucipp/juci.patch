@@ -1,0 +1,16 @@
+diff --git a/src/source_clang.cc b/src/source_clang.cc
+index 775782b..b6d2b79 100644
+--- a/src/source_clang.cc
++++ b/src/source_clang.cc
+@@ -237,6 +237,11 @@ std::vector<std::string> Source::ClangViewParse::get_compilation_commands() {
+ #endif
+   }
+   arguments.emplace_back("-fretain-comments-from-system-headers");
++  arguments.emplace_back("-fplugin=/root/ClanPlugin/lib/ClanPlugin.so");
++  arguments.emplace_back("-Xclang");
++  arguments.emplace_back("-plugin-arg-clan");
++  arguments.emplace_back("-Xclang");
++  arguments.emplace_back("-emit-openmp");
+   
+   if(file_path.extension()==".h" ||  //TODO: temporary fix for .h-files (parse as c++)
+      (language && (language->get_id()=="cpp" || language->get_id()=="cpphdr")))
