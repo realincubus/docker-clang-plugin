@@ -41,7 +41,7 @@ ADD xinitrc /data/.xinitrc
 
 # TODO move to usual install stuff
 RUN pacman --noconfirm --force -S xorg-xauth xorg-xkbcomp xkeyboard-config
-RUN pacman --noconfirm --force -S sudo xorg-server xorg-xinit xorg-server-utils xf86-video-vesa xterm
+RUN pacman --noconfirm --force -S sudo xorg-server xorg-xinit xf86-video-vesa xterm
 
 ADD restart /restart
 
