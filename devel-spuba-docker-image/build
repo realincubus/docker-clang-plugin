@@ -1,1 +1,1 @@
-docker build -t incubus/devel_spuba .
+docker build -t incubus/devel-spuba .

@@ -1,1 +1,1 @@
-docker build -t incubus/devel_ttt .
+docker build -t incubus/devel-ttt .

@@ -1,1 +1,1 @@
-docker build -t incubus/devel_sim .
+docker build -t incubus/devel-sim .
