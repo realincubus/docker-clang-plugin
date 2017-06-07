@@ -15,11 +15,13 @@ export CPATH=$HOME/pluto_install/include/pluto/:$HOME/pluto_install/include/plut
 alias vi='vim'
 alias ls='ls -lh --color=auto'
 alias compare='vimdiff main.opt.cpp main.reference.cpp'
+alias cmp_org='vimdiff main.opt.cpp ../main.cpp'
 alias makeref='cp main.opt.cpp main.reference.cpp; git add main.reference.cpp'
 alias tbb='./../../test_optimize.sh . tbb'
 alias omp='./../../test_optimize.sh . openmp'
 alias acc='./../../test_optimize.sh . openacc'
 alias cilk='./../../test_optimize.sh . cilk'
+alias all='tbb; omp; cilk; acc;'
 
 export TERM=xterm
 export EDITOR=vim

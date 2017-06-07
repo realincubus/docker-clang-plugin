@@ -1,0 +1,2 @@
+#docker rmi incubus/clang
+docker build -t incubus/optci  .
