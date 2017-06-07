@@ -23,6 +23,6 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -Scc 
 
 RUN cd ~ && \
-    git clone https://github.com/realincubus/optci.git  
-#    cmake . && \
-#    make -j 5
+    git clone https://github.com/realincubus/optci.git && \ 
+    cmake . && \
+    make -j 5
