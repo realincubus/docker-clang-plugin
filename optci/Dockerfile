@@ -24,5 +24,6 @@ RUN pacman -Syy --noconfirm && \
 
 RUN cd ~ && \
     git clone https://github.com/realincubus/optci.git && \ 
+    cd optci && \
     cmake . && \
     make -j 5
