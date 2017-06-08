@@ -14,6 +14,13 @@
 FROM incubus/devel
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
+RUN pacman -Syy --noconfirm && \ 
+    pacman --noconfirm --force -S archlinux-keyring && \
+    pacman --noconfirm --force -S pacman && \
+    pacman-db-upgrade && \
+    pacman --noconfirm --force -S gcc-fortran hdf5-openmpi  && \ 
+    pacman --noconfirm --force -Scc 
+
 COPY superlu_4.3.tar.gz /superlu_4.3.tar.gz
 
 RUN cd /tmp && \
@@ -22,15 +29,6 @@ RUN cd /tmp && \
     ./bootstrap && \
     make -j 5 && \
     make install
-
-RUN pacman -Syy --noconfirm && \ 
-    pacman --noconfirm --force -S archlinux-keyring && \
-    pacman --noconfirm --force -S pacman && \
-    pacman-db-upgrade && \
-    pacman --noconfirm --force -U /superlu-4.3-1-x86_64.pkg.tar.xz  && \ 
-    pacman --noconfirm --force -S hdf5-openmpi  && \ 
-    pacman --noconfirm --force -Scc 
-
 
 
 ADD pic2d /root/pic2d
