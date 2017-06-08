@@ -14,7 +14,14 @@
 FROM incubus/devel
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
-COPY superlu-4.3-1-x86_64.pkg.tar.xz /superlu-4.3-1-x86_64.pkg.tar.xz
+COPY superlu_4.3.tar.gz /superlu_4.3.tar.gz
+
+RUN cd /tmp && \
+    tar -xvf /superlu_4.3.tar.gz && \
+    cd SuperLU_4.3 && \
+    ./bootstrap && \
+    make -j 5 && \
+    make install
 
 RUN pacman -Syy --noconfirm && \ 
     pacman --noconfirm --force -S archlinux-keyring && \
