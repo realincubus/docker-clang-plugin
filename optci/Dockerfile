@@ -19,7 +19,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
     pacman --noconfirm --force -Syu pacman && \
     pacman-db-upgrade && \
-    pacman --noconfirm --force -S bc && \
+    pacman --noconfirm --force -S bc perf && \
     pacman --noconfirm --force -Scc 
 
 RUN cd ~ && \
