@@ -19,7 +19,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
     pacman --noconfirm --force -Syu pacman && \
     pacman-db-upgrade && \
-    pacman --noconfirm --force -S bc perf yaml-cpp boost && \
+    pacman --noconfirm --force -S bc perf yaml-cpp boost numactl && \
     pacman --noconfirm --force -Scc 
 
 #RUN cd ~ \
