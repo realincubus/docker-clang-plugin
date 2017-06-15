@@ -12,7 +12,6 @@ MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 ARG OSIZE=1
 ARG JOBS=2
 
-COPY clang_5.0_libs.patch /root/clang.patch
 
 # install pet 
 RUN pacman -Syy --noconfirm && \
@@ -22,6 +21,8 @@ RUN pacman -Syy --noconfirm && \
     pacman-db-upgrade && \
     pacman --noconfirm -S git bison flex autogen autoconf automake texinfo glibc libunistring libyaml && \
     pacman --noconfirm --force -Scc
+
+COPY clang_5.0_libs.patch /root/clang.patch
 
 RUN cd ~ && \
     mkdir pet_install && \
