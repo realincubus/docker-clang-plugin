@@ -1,5 +1,5 @@
 diff --git a/interface/Makefile.am b/interface/Makefile.am
-index 0269e911..5d862aa8 100644
+index 0269e911..ddf5608b 100644
 --- a/interface/Makefile.am
 +++ b/interface/Makefile.am
 @@ -2,7 +2,7 @@ AUTOMAKE_OPTIONS = nostdinc
@@ -12,16 +12,16 @@ index 0269e911..5d862aa8 100644
  
  includes = -I$(top_builddir) -I$(top_srcdir) \
 @@ -18,7 +18,7 @@ extract_interface_LDADD = \
-        -lclangFrontend -lclangSerialization -lclangParse -lclangSema \
-        $(LIB_CLANG_EDIT) \
-        -lclangAnalysis -lclangAST -lclangLex -lclangBasic -lclangDriver \
--       $(CLANG_LIBS) $(CLANG_LDFLAGS)
-+       $(CLANG_LIBS) $(CLANG_LDFLAGS) -ldl -lz -lcursesw
+ 	-lclangFrontend -lclangSerialization -lclangParse -lclangSema \
+ 	$(LIB_CLANG_EDIT) \
+ 	-lclangAnalysis -lclangAST -lclangLex -lclangBasic -lclangDriver \
+-	$(CLANG_LIBS) $(CLANG_LDFLAGS)
++	$(CLANG_LIBS) $(CLANG_LDFLAGS) -dl -lz -lcursesw
  
  test: extract_interface
-        ./extract_interface$(EXEEXT) $(includes) $(srcdir)/all.h
+ 	./extract_interface$(EXEEXT) $(includes) $(srcdir)/all.h
 diff --git a/interface/extract_interface.cc b/interface/extract_interface.cc
-index 3663ef76..c69f4cf5 100644
+index 3663ef76..71b141c4 100644
 --- a/interface/extract_interface.cc
 +++ b/interface/extract_interface.cc
 @@ -67,6 +67,7 @@
@@ -33,37 +33,37 @@ index 3663ef76..c69f4cf5 100644
  #include "extract_interface.h"
  #include "python.h"
 @@ -199,7 +200,7 @@ static CompilerInvocation *construct_invocation(const char *filename,
-                driver->BuildCompilation(llvm::ArrayRef<const char *>(Argv)));
-        JobList &Jobs = compilation->getJobs();
+ 		driver->BuildCompilation(llvm::ArrayRef<const char *>(Argv)));
+ 	JobList &Jobs = compilation->getJobs();
  
--       Command *cmd = cast<Command>(ClangAPI::command(*Jobs.begin()));
-+       auto cmd = Jobs.begin();
-        if (strcmp(cmd->getCreator().getName(), "clang"))
-                return NULL;
+-	Command *cmd = cast<Command>(ClangAPI::command(*Jobs.begin()));
++	auto cmd = Jobs.begin();
+ 	if (strcmp(cmd->getCreator().getName(), "clang"))
+ 		return NULL;
  
 @@ -347,13 +348,13 @@ int main(int argc, char *argv[])
-        CompilerInvocation *invocation =
-                construct_invocation(InputFilename.c_str(), Diags);
-        if (invocation)
--               Clang->setInvocation(invocation);
-+               Clang->setInvocation(std::make_shared<CompilerInvocation>(*invocation));
-        Clang->createFileManager();
-        Clang->createSourceManager(Clang->getFileManager());
-        TargetInfo *target = create_target_info(Clang, Diags);
-        Clang->setTarget(target);
--       CompilerInvocation::setLangDefaults(Clang->getLangOpts(), IK_C,
--                                           LangStandard::lang_unspecified);
-+       //CompilerInvocation::setLangDefaults(Clang->getLangOpts(), IK_C,
-+       //                                  LangStandard::lang_unspecified);
-        HeaderSearchOptions &HSO = Clang->getHeaderSearchOpts();
-        LangOptions &LO = Clang->getLangOpts();
-        PreprocessorOptions &PO = Clang->getPreprocessorOpts();
+ 	CompilerInvocation *invocation =
+ 		construct_invocation(InputFilename.c_str(), Diags);
+ 	if (invocation)
+-		Clang->setInvocation(invocation);
++                Clang->setInvocation(std::make_shared<CompilerInvocation>(*invocation));
+ 	Clang->createFileManager();
+ 	Clang->createSourceManager(Clang->getFileManager());
+ 	TargetInfo *target = create_target_info(Clang, Diags);
+ 	Clang->setTarget(target);
+-	CompilerInvocation::setLangDefaults(Clang->getLangOpts(), IK_C,
+-					    LangStandard::lang_unspecified);
++	//CompilerInvocation::setLangDefaults(Clang->getLangOpts(), IK_C,
++	//				    LangStandard::lang_unspecified);
+ 	HeaderSearchOptions &HSO = Clang->getHeaderSearchOpts();
+ 	LangOptions &LO = Clang->getLangOpts();
+ 	PreprocessorOptions &PO = Clang->getPreprocessorOpts();
 @@ -372,7 +373,7 @@ int main(int argc, char *argv[])
-        create_preprocessor(Clang);
-        Preprocessor &PP = Clang->getPreprocessor();
+ 	create_preprocessor(Clang);
+ 	Preprocessor &PP = Clang->getPreprocessor();
  
--       PP.getBuiltinInfo().InitializeBuiltins(PP.getIdentifierTable(), LO);
-+       //PP.getBuiltinInfo().InitializeBuiltins(PP.getIdentifierTable(), LO);
+-	PP.getBuiltinInfo().InitializeBuiltins(PP.getIdentifierTable(), LO);
++	//PP.getBuiltinInfo().InitializeBuiltins(PP.getIdentifierTable(), LO);
  
-        const FileEntry *file = Clang->getFileManager().getFile(InputFilename);
-        assert(file);
+ 	const FileEntry *file = Clang->getFileManager().getFile(InputFilename);
+ 	assert(file);
