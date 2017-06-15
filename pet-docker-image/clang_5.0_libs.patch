@@ -16,7 +16,7 @@ index 0269e911..ddf5608b 100644
  	$(LIB_CLANG_EDIT) \
  	-lclangAnalysis -lclangAST -lclangLex -lclangBasic -lclangDriver \
 -	$(CLANG_LIBS) $(CLANG_LDFLAGS)
-+	$(CLANG_LIBS) $(CLANG_LDFLAGS) -dl -lz -lcursesw
++	$(CLANG_LIBS) $(CLANG_LDFLAGS) -ldl -lz -lcursesw
  
  test: extract_interface
  	./extract_interface$(EXEEXT) $(includes) $(srcdir)/all.h
