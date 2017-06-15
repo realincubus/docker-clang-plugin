@@ -30,4 +30,5 @@ RUN cd ~ && \
 
 RUN cd ~ && \	
     git clone https://github.com/RRZE-HPC/likwid.git && \ 
+    cd likwid && \
     make && make install     
