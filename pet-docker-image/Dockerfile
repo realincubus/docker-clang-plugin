@@ -21,14 +21,15 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -Syu && \
     pacman-db-upgrade && \
     pacman --noconfirm -S git bison flex autogen autoconf automake texinfo glibc libunistring libyaml && \
-    pacman --noconfirm --force -Scc && \
-    cd ~ && \
+    pacman --noconfirm --force -Scc
+
+RUN cd ~ && \
     mkdir pet_install && \
      git clone --depth=1 https://github.com/realincubus/pet.git && \
     cd pet && \
     git submodule update --init --recursive && \
     cd isl && \
-    patch -p1 < /root/clang.patch && \
+    git apply /root/clang.patch && \
     cd .. && \
     ./autogen.sh && \
     ./configure --with-clang-prefix=$HOME/install --prefix=$HOME/pet_install --with-pic  && \
