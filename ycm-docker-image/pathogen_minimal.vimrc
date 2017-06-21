@@ -73,3 +73,6 @@ let g:ycm_extra_conf_vim_data = ['g:emit_type']
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+
+set encoding=utf-8
