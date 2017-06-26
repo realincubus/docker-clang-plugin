@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 # need all paths that we also have on command line
 source /root/.bashrc 
 cd /root/optci/unit_tests && ctest --no-compress-output -T Test .
