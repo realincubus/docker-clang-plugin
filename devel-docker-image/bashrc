@@ -28,5 +28,5 @@ export EDITOR=vim
 
 git config --global user.email "kemnitz.stefan@googlemail.com"
 git config --global user.name "Stefan Kemnitz"
-git config credential.helper 'cache --timeout=300'
+git config credential.helper 'cache --timeout=3000'
 

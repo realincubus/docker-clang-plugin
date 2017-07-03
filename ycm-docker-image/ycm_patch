@@ -1,17 +1,17 @@
 diff --git a/ycmd/completers/cpp/flags.py b/ycmd/completers/cpp/flags.py
-index 453b226..631cb1e 100644
+index e85e6093..fcae9934 100644
 --- a/ycmd/completers/cpp/flags.py
 +++ b/ycmd/completers/cpp/flags.py
-@@ -35,7 +35,7 @@ from ycmd.responses import NoExtraConfDetected
- 
+@@ -38,7 +38,7 @@ from ycmd.responses import NoExtraConfDetected
+ # checks prefixes).
  INCLUDE_FLAGS = [ '-isystem', '-I', '-iquote', '-isysroot', '--sysroot',
-                   '-gcc-toolchain', '-include', '-include-pch', '-iframework',
+                   '-gcc-toolchain', '-include-pch', '-include', '-iframework',
 -                  '-F', '-imacros' ]
 +                  '-F', '-imacros', '-Xclang' ]
+ PATH_FLAGS =  [ '--sysroot=' ] + INCLUDE_FLAGS
  
  # We need to remove --fcolor-diagnostics because it will cause shell escape
- # sequences to show up in editors, which is bad. See Valloric/YouCompleteMe#1421
-@@ -177,7 +177,7 @@ def _CallExtraConfFlagsForFile( module, filename, client_data ):
+@@ -305,7 +305,7 @@ def _SysRootSpecifedIn( flags ):
  
  def PrepareFlagsForClang( flags, filename, add_extra_clang_flags = True ):
    flags = _AddLanguageFlagWhenAppropriate( flags )
@@ -19,5 +19,4 @@ index 453b226..631cb1e 100644
 +  #flags = _RemoveXclangFlags( flags )
    flags = _RemoveUnusedFlags( flags, filename )
    if add_extra_clang_flags:
-     flags = _EnableTypoCorrection( flags )
-
+     if OnMac() and not _SysRootSpecifedIn( flags ):
