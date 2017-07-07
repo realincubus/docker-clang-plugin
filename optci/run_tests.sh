@@ -17,6 +17,5 @@
 cd /root/optci/unit_tests && ctest --no-compress-output -T Test .
 rm -rf /host/*
 cp -r /root/optci/unit_tests/Testing /host/optci_results
-cp -r /root/optci /host/optci_results/optci
 chmod 777 -R /host
 
