@@ -5,8 +5,9 @@
 
 # ├─base/archlinux
 #   ├─incubus/clang
+#     ├─incubus/gcc
 
-FROM incubus/clang
+FROM incubus/gcc
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ARG OSIZE=1
