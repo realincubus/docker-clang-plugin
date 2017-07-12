@@ -62,6 +62,6 @@ RUN cd ~ && \
     --enable-languages="c,c++,lto" \
     --prefix=/usr && \
     make -j 20 && \ 
-    pacman --noconfirm --force -R gcc && \
+    pacman --noconfirm -R gcc && \
     make install
 
