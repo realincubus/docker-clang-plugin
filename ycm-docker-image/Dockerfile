@@ -23,7 +23,7 @@ RUN pacman -Syy --noconfirm && \
  
 # install pathogen
 RUN mkdir -p ~/.vim/autoload ~/.vim/bundle && \
-    curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+    curl -LSso ~/.vim/autoload/pathogen.vim https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
 
 COPY ycm_patch /root/ycm_patch
 
