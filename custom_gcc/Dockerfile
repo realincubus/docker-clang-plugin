@@ -40,7 +40,7 @@ RUN cd ~ && \
     --enable-as-accelerator-for=$target \
     --disable-sjlj-exceptions \
     --enable-newlib-io-long-long \
-    --enable-languages="c,c++,fortran,lto" \
+    --enable-languages="c,c++,lto" \
     --prefix=/usr 
 
 RUN cd ~ && \
@@ -56,7 +56,7 @@ RUN cd ~ && \
     --enable-offload-targets=nvptx-none \
     --disable-bootstrap \
     --disable-multilib \
-    --enable-languages="c,c++,fortran,lto" \
+    --enable-languages="c,c++,lto" \
     --prefix=/usr && \
     make -j 20 && \ 
     pacman --noconfirm --force -R gcc && \
