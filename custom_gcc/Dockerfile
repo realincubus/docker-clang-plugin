@@ -31,6 +31,8 @@ RUN cd ~ && \
     contrib/download_prerequisites && \
     ln -s ../nvptx-newlib/newlib newlib
     
+RUN pacman --noconfirm --force -S perl
+
 RUN cd ~ && \
     target=$(gcc/config.guess) && \
     mkdir build-nvptx-gcc && \
