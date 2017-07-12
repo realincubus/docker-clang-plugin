@@ -6,8 +6,9 @@
 # ├─base/archlinux
 #   ├─incubus/clang
 #     ├─incubus/gcc
+#       ├─incubus/parallel_frameworks
 
-FROM incubus/gcc
+FROM incubus/parallel_frameworks
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ARG OSIZE=1
