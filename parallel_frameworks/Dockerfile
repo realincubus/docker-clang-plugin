@@ -13,7 +13,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
     pacman --noconfirm --force -Syu pacman && \
     pacman-db-upgrade && \
-    pacman --noconfirm --force -S jemalloc wget && \
+    pacman --noconfirm --force -S jemalloc wget boost && \
     pacman --noconfirm --force -Scc 
 
 RUN cd ~ && \
