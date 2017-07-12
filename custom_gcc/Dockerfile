@@ -32,6 +32,7 @@ RUN cd ~ && \
     ln -s ../nvptx-newlib/newlib newlib
     
 RUN pacman --noconfirm --force -S perl
+RUN pacman --noconfirm --force -S flex bison
 
 RUN cd ~ && \
     target=$(gcc/config.guess) && \
