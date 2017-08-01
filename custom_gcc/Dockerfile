@@ -25,8 +25,8 @@ RUN cd ~ && \
     make install
 
 RUN cd ~ && \
-    git clone https://github.com/MentorEmbedded/nvptx-newlib && \
-    svn co svn://gcc.gnu.org/svn/gcc/trunk gcc && \
+    git clone --depth=1 https://github.com/MentorEmbedded/nvptx-newlib && \
+    git clone --depth=1 https://github.com/gcc-mirror/gcc.git gcc && \
     cd gcc && \
     contrib/download_prerequisites && \
     ln -s ../nvptx-newlib/newlib newlib
