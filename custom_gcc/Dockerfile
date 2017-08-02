@@ -14,7 +14,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
     pacman --noconfirm --force -Syu pacman && \
     pacman-db-upgrade && \
-    pacman --noconfirm --force -S cuda svn nvidia && \
+    pacman --noconfirm --force -S cuda svn nvidia perl flex bison && \
     pacman --noconfirm --force -Scc 
 
 RUN cd ~ && \
@@ -22,7 +22,9 @@ RUN cd ~ && \
     cd nvptx-tools && \
     ./configure --prefix=/usr/ && \
     make -j 20 && \
-    make install
+    make install && \
+    cd .. && \
+    rm -rf nvptx-tools
 
 RUN cd ~ && \
     git clone --depth=1 https://github.com/MentorEmbedded/nvptx-newlib && \
@@ -31,8 +33,6 @@ RUN cd ~ && \
     contrib/download_prerequisites && \
     ln -s ../nvptx-newlib/newlib newlib
     
-RUN pacman --noconfirm --force -S perl
-RUN pacman --noconfirm --force -S flex bison
 
 RUN cd ~ && \
     target=$(gcc/config.guess) && \
@@ -49,7 +49,9 @@ RUN cd ~ && \
 RUN cd ~ && \
     cd build-nvptx-gcc && \
     make -j 20 && \
-    make install 
+    make install && \
+    cd .. && \
+    rm -rf build-nvptx-gcc
 
 
 RUN cd ~ && \
@@ -61,6 +63,8 @@ RUN cd ~ && \
     --disable-multilib \
     --enable-languages="c,c++,lto" \
     --prefix=/usr && \
-    make -j 20 && \ 
-    make install
+    make -j 20 && \
+    make install && \
+    cd .. && \
+    rm -rf build-host-gcc
 
