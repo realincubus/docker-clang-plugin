@@ -66,6 +66,6 @@ RUN cd ~ && \
     rm -rf build-host-gcc
 
 # clean up for docker squash
-RUN cd ~ \
-    rm -rf gcc nvptx-newlib && \
-    pacman --noconfirm --force -R perl flex bison
+RUN cd ~ && \
+    rm -rf gcc nvptx-newlib || true && \
+    pacman --noconfirm --force -R perl flex bison || true
