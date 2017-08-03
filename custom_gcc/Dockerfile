@@ -14,7 +14,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S archlinux-keyring && \
     pacman --noconfirm --force -Syu pacman && \
     pacman-db-upgrade && \
-    pacman --noconfirm --force -S cuda svn nvidia perl flex bison && \
+    pacman --noconfirm --force -S cuda nvidia perl flex bison && \
     pacman --noconfirm --force -Scc 
 
 RUN cd ~ && \
@@ -38,16 +38,13 @@ RUN cd ~ && \
     target=$(gcc/config.guess) && \
     mkdir build-nvptx-gcc && \
     cd build-nvptx-gcc && \
-    ../gcc/configure \
+    ../gcc/configure -C \
     --target=nvptx-none --with-build-time-tools=/usr/nvptx-none/bin \
     --enable-as-accelerator-for=$target \
     --disable-sjlj-exceptions \
     --enable-newlib-io-long-long \
     --enable-languages="c,c++,lto" \
-    --prefix=/usr 
-
-RUN cd ~ && \
-    cd build-nvptx-gcc && \
+    --prefix=/usr && \
     make -j 20 && \
     make install && \
     cd .. && \
@@ -57,7 +54,7 @@ RUN cd ~ && \
 RUN cd ~ && \
     mkdir build-host-gcc && \
     cd build-host-gcc && \
-    ../gcc/configure \
+    ../gcc/configure -C \
     --enable-offload-targets=nvptx-none \
     --disable-bootstrap \
     --disable-multilib \
@@ -68,3 +65,7 @@ RUN cd ~ && \
     cd .. && \
     rm -rf build-host-gcc
 
+# clean up for docker squash
+RUN cd ~ \
+    rm -rf gcc nvptx-newlib && \
+    pacman --noconfirm --force -R perl flex bison
