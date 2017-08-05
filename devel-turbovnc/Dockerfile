@@ -29,7 +29,8 @@ RUN git clone https://github.com/TurboVNC/turbovnc.git /turbovnc && \
     cmake -DTJPEG_LIBRARY=/usr/lib/libturbojpeg.so -DTVNC_BUILDJAVA=0 -DTVNC_BUILDNATIVE=0 -DTVNC_USETLS=gnutls . && \
     make -j 4 && \
     make install && \
-    cd .. rm -rf turbovnc
+    cd .. && \
+    rm -rf turbovnc
 
 ADD turboscript /turboscript
     
