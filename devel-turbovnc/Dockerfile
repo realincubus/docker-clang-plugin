@@ -21,17 +21,15 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm -S \
 	turbojpeg \
 	cmake \
-	gcc \
 	lxde-common lxsession openbox && \
     pacman --noconfirm --force -Scc
 
-ADD tvnc_gnutls.patch /tvnc_gnutls.patch 
 RUN git clone https://github.com/TurboVNC/turbovnc.git /turbovnc && \
     cd /turbovnc && \
-    git apply /tvnc_gnutls.patch && \
     cmake -DTJPEG_LIBRARY=/usr/lib/libturbojpeg.so -DTVNC_BUILDJAVA=0 -DTVNC_BUILDNATIVE=0 -DTVNC_USETLS=gnutls . && \
     make -j 4 && \
-    make install
+    make install && \
+    cd .. rm -rf turbovnc
 
 ADD turboscript /turboscript
     

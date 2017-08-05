@@ -9,7 +9,6 @@ FROM base/archlinux
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ARG JOBS=1
-ARG OSIZE=1
 
 # Update and force a refresh of all package lists even if they appear up to date.
 RUN pacman -Syy --noconfirm && \ 
@@ -43,6 +42,6 @@ RUN cd ~ && \
     ninja -j $JOBS && \
     ninja install && \
     cd ~ && \
-    if `test $OSIZE -eq 1 `; then rm -r build ; fi && \
-    if `test $OSIZE -eq 1 `; then rm -r llvm ; fi 
+    rm -r build && \
+    rm -r llvm 
 
