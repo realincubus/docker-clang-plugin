@@ -14,7 +14,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -S pacman && \
     pacman-db-upgrade && \
     pacman --noconfirm --force -Syu pacman && \
-    pacman --noconfirm --force -S git gcc cmake make curl msgpack-c libuv unibilium libtermkey libvterm lua51 jemalloc lua51 lua51-lpeg lua51-mpack lua51-bitop gperf python python-pip && \
+    pacman --noconfirm --force -S git cmake make curl msgpack-c libuv unibilium libtermkey libvterm lua51 jemalloc lua51 lua51-lpeg lua51-mpack lua51-bitop gperf python python-pip && \
     pacman --noconfirm --force -Scc 
 
 RUN curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim 
