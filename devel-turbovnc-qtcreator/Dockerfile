@@ -23,6 +23,7 @@ RUN pacman -Syy --noconfirm && \
     pacman --noconfirm --force -Scc
 
 ADD qtexample /data/qtexample
+ADD QtCreator.ini  /data/QtCreator.ini
 ADD bashrc /data/bashrc
 ADD config /data/config
 

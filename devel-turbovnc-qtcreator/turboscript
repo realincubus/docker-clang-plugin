@@ -15,6 +15,8 @@ ln -s /usr/lib/libclang.so /usr/lib/libclang.so.4
 ln -s /usr/lib/libclang.so /usr/lib/libclang.so.4.0
 chown $user:users -R /root
 cp -r /data/qtexample /home/$user/
+mkdir -p /home/$user/.config/QtProject/
+cp -r /data/QtCreator.ini /home/$user/.config/QtProject/QtCreator.ini
 cp -r /data/config /home/$user/.config
 cp -r /data/bashrc /home/$user/.bashrc
 chown $user:users -R /home/$user/
