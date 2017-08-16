@@ -27,4 +27,4 @@ ADD QtCreator.ini  /data/QtCreator.ini
 ADD bashrc /data/bashrc
 ADD config /data/config
 
-ADD turboscript /turboscript_qtcreator
+ADD turboscript /turboscript

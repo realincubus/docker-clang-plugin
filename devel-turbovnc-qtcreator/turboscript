@@ -1,13 +1,4 @@
 #!/bin/bash
-#useradd -G users -o -u $uid $user
-#echo "$user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-#mkdir -p /home/$user/.vnc; printf "$pw" |/opt/TurboVNC/bin/vncpasswd -f > /home/$user/.vnc/passwd
-#chmod 600 /home/$user/.vnc/passwd
-#chown -R $user /home/$user/.vnc
-#cp /data/.xinitrc /home/$user/
-#chown $user /home/$user/.xinitrc
-#chown $user /home/$user
-#runuser -l $user -c "/opt/TurboVNC/bin/vncserver -fg -autokill"
 useradd -G users -o -u $uid $user
 rm -r /usr/lib/libclang.so*
 cp /root/install/lib/libclang.so* /usr/lib/ 
@@ -21,4 +12,12 @@ cp -r /data/config /home/$user/.config
 cp -r /data/bashrc /home/$user/.bashrc
 chown $user:users -R /home/$user/
 
-/turboscript
+# normal turboscript stuff
+echo "$user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+mkdir -p /home/$user/.vnc; printf "$pw" |/opt/TurboVNC/bin/vncpasswd -f > /home/$user/.vnc/passwd
+chmod 600 /home/$user/.vnc/passwd
+chown -R $user /home/$user/.vnc
+cp /data/.xinitrc /home/$user/
+chown $user /home/$user/.xinitrc
+chown $user /home/$user
+runuser -l $user -c "/opt/TurboVNC/bin/vncserver -fg -autokill"
