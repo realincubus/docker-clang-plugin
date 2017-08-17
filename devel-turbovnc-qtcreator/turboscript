@@ -16,7 +16,9 @@ chown $user:users -R /home/$user/
 echo "$user ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 mkdir -p /home/$user/.vnc; printf "$pw" |/opt/TurboVNC/bin/vncpasswd -f > /home/$user/.vnc/passwd
 chmod 600 /home/$user/.vnc/passwd
+cp /tmp/xstartup.turbovnc /home/$user/.vnc/xstartup.turbovnc 
 chown -R $user /home/$user/.vnc
+
 cp /data/.xinitrc /home/$user/
 chown $user /home/$user/.xinitrc
 chown $user /home/$user
