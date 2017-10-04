@@ -6,7 +6,7 @@
 # ├─base/archlinux
 #   ├─incubus/clang
 
-FROM incubus/gcc
+FROM incubus/clang
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 RUN pacman -Syy --noconfirm && \ 
