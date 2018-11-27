@@ -8,7 +8,7 @@
 #     ├─incubus/pet
 #       ├─incubus/pluto
 
-FROM incubus/pluto
+FROM compus.physik.uni-greifswald.de:5000/kemnitzs/pluto
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 #TODO implement something to install the plugin and then remove the compilation folder

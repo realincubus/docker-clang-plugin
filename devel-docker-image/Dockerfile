@@ -10,7 +10,7 @@
 #         ├─incubus/plugin
 #           ├─incubus/ycm
 
-FROM incubus/ycm-large
+FROM compus.physik.uni-greifswald.de:5000/kemnitzs/ycm-large
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # download the needed software 

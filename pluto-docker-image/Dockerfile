@@ -7,7 +7,7 @@
 #   ├─incubus/clang
 #     ├─incubus/pet
 
-FROM incubus/pet
+FROM compus.physik.uni-greifswald.de:5000/kemnitzs/pet
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ARG OSIZE=1

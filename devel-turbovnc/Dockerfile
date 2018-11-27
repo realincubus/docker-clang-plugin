@@ -9,7 +9,7 @@
 #       ├─incubus/pluto
 #         ├─incubus/plugin
 
-FROM incubus/plugin
+FROM compus.physik.uni-greifswald.de:5000/kemnitzs/plugin
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # download the needed software 

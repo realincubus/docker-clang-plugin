@@ -9,7 +9,7 @@
 #       ├─incubus/plugin
 #         ├─incubus/plugin-tests
 
-FROM incubus/plugin-tests
+FROM compus.physik.uni-greifswald.de:5000/kemnitzs/plugin-tests
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # download the needed software 

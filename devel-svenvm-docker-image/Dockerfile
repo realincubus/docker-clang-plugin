@@ -11,7 +11,7 @@
 #           ├─incubus/ycm
 #             ├─incubus/devel
 
-FROM incubus/devel
+FROM compus.physik.uni-greifswald.de:5000/kemnitzs/devel
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ADD SimulationVM /root/SimulationVM

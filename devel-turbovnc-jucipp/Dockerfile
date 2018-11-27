@@ -10,7 +10,7 @@
 #         ├─incubus/plugin
 #           ├─incubus/devel-turbovnc
 
-FROM incubus/devel-turbovnc
+FROM compus.physik.uni-greifswald.de:5000/kemnitzs/devel-turbovnc
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # download the needed software 

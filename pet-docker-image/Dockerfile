@@ -8,7 +8,7 @@
 #     ├─incubus/gcc
 #       ├─incubus/parallel_frameworks
 
-FROM incubus/parallel_frameworks
+FROM compus.physik.uni-greifswald.de:5000/kemnitzs/parallel_frameworks
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 ARG OSIZE=1

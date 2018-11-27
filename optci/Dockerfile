@@ -11,7 +11,7 @@
 #           ├─incubus/ycm
 
 
-FROM incubus/devel-pic2d
+FROM compus.physik.uni-greifswald.de:5000/kemnitzs/devel-pic2d
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # Update and force a refresh of all package lists even if they appear up to date.
