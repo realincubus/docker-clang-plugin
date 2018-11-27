@@ -6,7 +6,7 @@
 # ├─base/archlinux
 #   ├─incubus/clang
 
-FROM incubus/clang
+FROM compus.physik.uni-greifswald.de:5000/kemnitzs/clang
 MAINTAINER Stefan Kemnitz <kemnitz.stefan@googlemail.com>
 
 # Update and force a refresh of all package lists even if they appear up to date.
