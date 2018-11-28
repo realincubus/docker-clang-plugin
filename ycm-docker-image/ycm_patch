@@ -1,22 +1,22 @@
 diff --git a/ycmd/completers/cpp/flags.py b/ycmd/completers/cpp/flags.py
-index e85e6093..fcae9934 100644
+index 09179fa3..c36efe39 100644
 --- a/ycmd/completers/cpp/flags.py
 +++ b/ycmd/completers/cpp/flags.py
-@@ -38,7 +38,7 @@ from ycmd.responses import NoExtraConfDetected
+@@ -42,7 +42,7 @@ from ycmd.responses import NoExtraConfDetected
  # checks prefixes).
  INCLUDE_FLAGS = [ '-isystem', '-I', '-iquote', '-isysroot', '--sysroot',
                    '-gcc-toolchain', '-include-pch', '-include', '-iframework',
--                  '-F', '-imacros' ]
-+                  '-F', '-imacros', '-Xclang' ]
+-                  '-F', '-imacros', '-idirafter' ]
++                  '-F', '-imacros', '-idirafter', '-Xclang' ]
+ INCLUDE_FLAGS_WIN_STYLE = [ '/I' ]
  PATH_FLAGS =  [ '--sysroot=' ] + INCLUDE_FLAGS
- 
- # We need to remove --fcolor-diagnostics because it will cause shell escape
-@@ -305,7 +305,7 @@ def _SysRootSpecifedIn( flags ):
- 
- def PrepareFlagsForClang( flags, filename, add_extra_clang_flags = True ):
-   flags = _AddLanguageFlagWhenAppropriate( flags )
+
+@@ -330,7 +330,7 @@ def PrepareFlagsForClang( flags,
+                           add_extra_clang_flags = True,
+                           enable_windows_style_flags = False ):
+   flags = _AddLanguageFlagWhenAppropriate( flags, enable_windows_style_flags )
 -  flags = _RemoveXclangFlags( flags )
 +  #flags = _RemoveXclangFlags( flags )
-   flags = _RemoveUnusedFlags( flags, filename )
+   flags = _RemoveUnusedFlags( flags, filename, enable_windows_style_flags )
    if add_extra_clang_flags:
-     if OnMac() and not _SysRootSpecifedIn( flags ):
+     flags = _EnableTypoCorrection( flags )
