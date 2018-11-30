@@ -26,7 +26,7 @@ RUN cd ~ && \
     git clone https://github.com/realincubus/optci.git && \ 
     cd optci && \
     cmake . && \
-    make -j 5
+    make
 
 RUN cd ~ && \	
     git clone --depth=1 https://github.com/RRZE-HPC/likwid.git && \ 
